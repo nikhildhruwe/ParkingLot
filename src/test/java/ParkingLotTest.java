@@ -6,7 +6,8 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() {
         ParkingLot parkingLot = new ParkingLot();
-        boolean parked = parkingLot.vehicleParking();
-        Assert.assertTrue(parked);
+        String[] vehicleNumber = { "AAA", "BBB"};
+        int parked = parkingLot.vehicleParking(vehicleNumber);
+        Assert.assertEquals(2,parked);
     }
 }
