@@ -1,7 +1,6 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-
 import java.util.ArrayList;
 
 public class ParkingLot {
@@ -14,11 +13,20 @@ public class ParkingLot {
         this.parkingList = new ArrayList<>();
     }
 
+    /**
+     * Method for vehicle parking.
+     * @return number of parked vehicles
+     */
     public int vehicleParking(String[] vehicle) throws ParkingLotException {
         addVehicle(vehicle);
         return parkingList.size();
     }
 
+    /**
+     * Method to add vehicle to parking lot
+     * @param vehicles
+     * @throws ParkingLotException
+     */
     private void addVehicle(String[] vehicles) throws ParkingLotException {
         for (String vehicle : vehicles) {
             if (capacity < MAX_CAPACITY)
@@ -29,6 +37,10 @@ public class ParkingLot {
         }
     }
 
+    /**
+     * Method to unPark vehicle if present
+     * @return return true or false accordingly
+     */
     public boolean vehicleUnparking(String vehicleNumber) {
         if (parkingList.contains(vehicleNumber)) {
             parkingList.remove(vehicleNumber);
