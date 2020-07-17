@@ -1,7 +1,8 @@
 public class ParkingLotException extends Exception {
-    public enum ExceptionType{
+    public enum ExceptionType {
         CAPACITY_EXCEEDED
     }
+
     public ExceptionType type;
 
     public ParkingLotException(String message, ExceptionType type) {

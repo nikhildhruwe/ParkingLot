@@ -1,10 +1,10 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ParkingLot {
 
     private static final int MAX_CAPACITY = 2;
     private final ArrayList<String> parkingList;
+    private int capacity = 0;
 
     public ParkingLot() {
         this.parkingList = new ArrayList<>();
@@ -16,8 +16,7 @@ public class ParkingLot {
     }
 
     private void addVehicle(String[] vehicles) throws ParkingLotException {
-        int capacity = 0;
-        for (String vehicle : vehicles){
+        for (String vehicle : vehicles) {
             if (capacity < MAX_CAPACITY)
                 parkingList.add(vehicle);
             else
@@ -27,7 +26,7 @@ public class ParkingLot {
     }
 
     public boolean vehicleUnparking(String vehicleNumber) {
-       if(parkingList.contains(vehicleNumber)) {
+        if (parkingList.contains(vehicleNumber)) {
             parkingList.remove(vehicleNumber);
             return true;
         }
