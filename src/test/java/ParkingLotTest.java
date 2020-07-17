@@ -4,7 +4,7 @@ import org.junit.Test;
 public class ParkingLotTest {
 
     @Test
-    public void givenVehicle_WhenParked_ShouldReturnTrue() {
+    public void givenVehicles_WhenParked_ShouldReturnVehicleCount() {
         ParkingLot parkingLot = new ParkingLot();
         String[] vehicleNumber = { "AAA", "BBB"};
         int parked = parkingLot.vehicleParking(vehicleNumber);

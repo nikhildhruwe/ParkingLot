@@ -1,11 +1,9 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 
 public class ParkingLot {
 
-    private final List<String> vehicleList;
+    private final ArrayList<String> vehicleList;
 
     public ParkingLot() {
         this.vehicleList = new ArrayList<>();
