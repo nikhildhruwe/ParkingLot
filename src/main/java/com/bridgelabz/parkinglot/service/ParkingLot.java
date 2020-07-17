@@ -1,3 +1,7 @@
+package com.bridgelabz.parkinglot.service;
+
+import com.bridgelabz.parkinglot.exception.ParkingLotException;
+
 import java.util.ArrayList;
 
 public class ParkingLot {
@@ -20,7 +24,7 @@ public class ParkingLot {
             if (capacity < MAX_CAPACITY)
                 parkingList.add(vehicle);
             else
-                throw new ParkingLotException("Capacity Exceeded", ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
+                throw new ParkingLotException("Capacity Full", ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
             capacity++;
         }
     }

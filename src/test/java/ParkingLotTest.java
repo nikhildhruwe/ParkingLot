@@ -1,3 +1,5 @@
+import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -23,7 +25,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicleNumber_IfNotPresentInList_ShouldReturnFalse() throws ParkingLotException {
+    public void givenVehicleNumber_IfNotPresent_ShouldReturnFalse() throws ParkingLotException {
         ParkingLot parkingLot = new ParkingLot();
         String[] vehicleNumber = {"111", "222"};
         parkingLot.vehicleParking(vehicleNumber);
@@ -33,7 +35,7 @@ public class ParkingLotTest {
 
     //UC3
     @Test
-    public void givenVehicles_WhenCapacityExceeds_ShouldThrowException() {
+    public void givenVehiclesToPark_WhenCapacityExceeds_ShouldThrowException() {
         try {
             ParkingLot parkingLot = new ParkingLot();
             String[] vehicleNumber = {"111", "222", "333"};
