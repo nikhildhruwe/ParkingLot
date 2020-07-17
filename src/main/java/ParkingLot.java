@@ -17,4 +17,12 @@ public class ParkingLot {
     private void addVehicle(String[] vehicles) {
         vehicleList.addAll(Arrays.asList(vehicles));
     }
+
+    public boolean vehicleUnparking(String vehicleNumber) {
+       if(vehicleList.contains(vehicleNumber)) {
+            vehicleList.remove(vehicleNumber);
+            return true;
+        }
+        return false;
+    }
 }
