@@ -68,8 +68,8 @@ public class ParkingLotTest {
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
-        boolean parkingFull = parkingLot.isParkingFull(VIEWER.AIRPORT_SECURITY);
-        Assert.assertTrue(parkingFull);
+        boolean isParkingFull = parkingLot.isParkingFull(VIEWER.AIRPORT_SECURITY);
+        Assert.assertTrue(isParkingFull);
     }
 
     //UC5
@@ -80,7 +80,7 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
         parkingLot.unParkVehicle(vehicle1);
-        boolean parkingFull = parkingLot.isParkingFull(VIEWER.OWNER);
-        Assert.assertTrue(parkingFull);
+        boolean isParkingFull = parkingLot.isParkingFull(VIEWER.OWNER);
+        Assert.assertFalse(isParkingFull);
     }
 }
