@@ -2,7 +2,7 @@ package com.bridgelabz.parkinglot.exception;
 
 public class ParkingLotException extends Exception {
     public enum ExceptionType {
-        CAPACITY_EXCEEDED
+        CAPACITY_EXCEEDED, ALREADY_PRESENT
     }
 
     public ExceptionType type;
