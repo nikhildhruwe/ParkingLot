@@ -10,7 +10,7 @@ public class ParkingLotTest {
     private ParkingLot parkingLot;
 
     @Before
-    public void setup(){
+    public void setup() {
         parkingLot = new ParkingLot();
     }
 
@@ -19,7 +19,7 @@ public class ParkingLotTest {
     public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
         Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
-        boolean isParked = parkingLot.isVehicleParked();
+        boolean isParked = parkingLot.isVehicleParked(vehicle1);
         Assert.assertTrue(isParked);
     }
 
@@ -29,18 +29,19 @@ public class ParkingLotTest {
             Vehicle vehicle1 = new Vehicle();
             parkingLot.parkVehicle(vehicle1);
             parkingLot.parkVehicle(vehicle1);
-        }catch (ParkingLotException e){
+        } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PRESENT);
         }
     }
 
     //UC2
     @Test
-    public void givenVehicleNumber_WhenUnParked_ShouldUnParkAndReturnFalse() {
+    public void givenVehicleNumber_WhenUnParked_ShouldUnParkAndReturnFalse() throws ParkingLotException {
         Vehicle vehicle1 = new Vehicle();
+        parkingLot.parkVehicle(vehicle1);
         parkingLot.unParkVehicle(vehicle1);
-        boolean isParked = parkingLot.isVehicleParked();
-        Assert.assertFalse(isParked);
+        boolean isParked = parkingLot.isVehicleUnParked(vehicle1);
+        Assert.assertTrue(isParked);
     }
 
 
@@ -57,5 +58,16 @@ public class ParkingLotTest {
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
+    }
+
+    //UC4
+    @Test
+    public void givenVehiclesToPark_IfCapacityFull_ShouldInformAirportSecurity() throws ParkingLotException {
+        Vehicle vehicle1 = new Vehicle();
+        Vehicle vehicle2 = new Vehicle();
+        parkingLot.parkVehicle(vehicle1);
+        parkingLot.parkVehicle(vehicle2);
+        boolean parkingFull = parkingLot.isParkingFull();
+        Assert.assertTrue(parkingFull);
     }
 }
