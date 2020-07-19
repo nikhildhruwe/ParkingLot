@@ -40,10 +40,6 @@ public class ParkingLot {
         return parkingList.contains(vehicle);
     }
 
-    public boolean isVehicleUnParked(Vehicle vehicle) {
-        return !parkingList.contains(vehicle);
-    }
-
     public boolean isParkingFull() {
         return airportSecurity.getParkingStatus();
     }
@@ -57,7 +53,7 @@ public class ParkingLot {
     public void unParkVehicle(Vehicle vehicle) {
         if (parkingList.contains(vehicle)) {
             parkingList.remove(vehicle);
-            new AirportSecurity().setParkingStatus(false);
+            airportSecurity.setParkingStatus(false);
         }
     }
 }
