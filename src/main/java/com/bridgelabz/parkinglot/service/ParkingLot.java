@@ -1,8 +1,10 @@
 package com.bridgelabz.parkinglot.service;
 
+import com.bridgelabz.parkinglot.enums.VIEWER;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.utility.AirportSecurity;
+import com.bridgelabz.parkinglot.utility.ParkingLotOwner;
 
 import java.util.ArrayList;
 
@@ -12,14 +14,13 @@ public class ParkingLot {
     private final ArrayList<Vehicle> parkingList;
 
     AirportSecurity airportSecurity = new AirportSecurity();
-
+    ParkingLotOwner parkingLotOwner =new ParkingLotOwner();
     public ParkingLot() {
         this.parkingList = new ArrayList<>();
     }
 
     /**
      * Method to park vehicle to parking lot
-     *
      * @throws ParkingLotException already present in parking lot
      */
     public void parkVehicle(Vehicle vehicle) throws ParkingLotException {
@@ -32,8 +33,10 @@ public class ParkingLot {
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
-        if (parkingList.size() == MAX_CAPACITY)
+        if (parkingList.size() == MAX_CAPACITY) {
             airportSecurity.setParkingStatus(true);
+            parkingLotOwner.setParkingAvailability(true);
+        }
     }
 
     public boolean isVehicleParked(Vehicle vehicle) {
@@ -44,8 +47,16 @@ public class ParkingLot {
         return !parkingList.contains(vehicle);
     }
 
-    public boolean isParkingFull() {
-        return airportSecurity.getParkingStatus();
+    public boolean isParkingFull(VIEWER viewer) {
+        boolean parkingStatus = false;
+        switch (viewer){
+            case OWNER:
+                 parkingStatus = parkingLotOwner.getParkingStatus();
+                break;
+            case AIRPORT_SECURITY:
+                 parkingStatus = airportSecurity.getParkingStatus();
+        }
+        return parkingStatus;
     }
 
     /**
@@ -57,7 +68,7 @@ public class ParkingLot {
     public void unParkVehicle(Vehicle vehicle) {
         if (parkingList.contains(vehicle)) {
             parkingList.remove(vehicle);
-            new AirportSecurity().setParkingStatus(false);
+            parkingLotOwner.setParkingAvailability(true);
         }
     }
 }

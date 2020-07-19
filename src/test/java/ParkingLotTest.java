@@ -1,3 +1,4 @@
+import com.bridgelabz.parkinglot.enums.VIEWER;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.model.Vehicle;
@@ -67,7 +68,19 @@ public class ParkingLotTest {
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
-        boolean parkingFull = parkingLot.isParkingFull();
+        boolean parkingFull = parkingLot.isParkingFull(VIEWER.AIRPORT_SECURITY);
+        Assert.assertTrue(parkingFull);
+    }
+
+    //UC5
+    @Test
+    public void givenCapacityIsFull_WhenUnParked_ShouldInformParkingLotOwner() throws ParkingLotException {
+        Vehicle vehicle1 = new Vehicle();
+        Vehicle vehicle2 = new Vehicle();
+        parkingLot.parkVehicle(vehicle1);
+        parkingLot.parkVehicle(vehicle2);
+        parkingLot.unParkVehicle(vehicle1);
+        boolean parkingFull = parkingLot.isParkingFull(VIEWER.OWNER);
         Assert.assertTrue(parkingFull);
     }
 }
