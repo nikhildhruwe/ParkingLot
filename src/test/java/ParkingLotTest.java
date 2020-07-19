@@ -41,8 +41,8 @@ public class ParkingLotTest {
         Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.unParkVehicle(vehicle1);
-        boolean isParked = parkingLot.isVehicleUnParked(vehicle1);
-        Assert.assertTrue(isParked);
+        boolean isParked = parkingLot.isVehicleParked(vehicle1);
+        Assert.assertFalse(isParked);
     }
 
 
