@@ -1,9 +1,9 @@
 package com.bridgelabz.parkinglot.utility;
 
-public class AirportSecurity implements IInformingAuthority{
-    private boolean parking ;
+public class AirportSecurity {
+    private boolean parking;
 
-    public boolean getParkingStatus() {
+    public boolean getParkingAvailability() {
         return parking;
     }
 

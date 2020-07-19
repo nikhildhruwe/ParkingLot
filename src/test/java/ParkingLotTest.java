@@ -25,7 +25,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehicle_IfPresent_ShouldThrowException() {
+    public void givenVehicle_IfPresentInParkingLot_ShouldThrowException() {
         try {
             Vehicle vehicle1 = new Vehicle();
             parkingLot.parkVehicle(vehicle1);
@@ -37,7 +37,7 @@ public class ParkingLotTest {
 
     //UC2
     @Test
-    public void givenVehicleNumber_WhenUnParked_ShouldUnParkAndReturnFalse() throws ParkingLotException {
+    public void givenVehicle_WhenUnParked_ShouldReturnFalse() throws ParkingLotException {
         Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.unParkVehicle(vehicle1);

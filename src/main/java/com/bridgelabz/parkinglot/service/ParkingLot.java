@@ -3,6 +3,7 @@ package com.bridgelabz.parkinglot.service;
 import com.bridgelabz.parkinglot.enums.VIEWER;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
+
 import com.bridgelabz.parkinglot.utility.AirportSecurity;
 import com.bridgelabz.parkinglot.utility.ParkingLotOwner;
 
@@ -12,6 +13,7 @@ public class ParkingLot {
 
     private static final int MAX_CAPACITY = 2;
     private final ArrayList<Vehicle> parkingList;
+
     AirportSecurity airportSecurity;
     ParkingLotOwner parkingLotOwner;
 
@@ -53,7 +55,7 @@ public class ParkingLot {
                 parkingStatus = parkingLotOwner.getParkingStatus();
                 break;
             case AIRPORT_SECURITY:
-                parkingStatus = airportSecurity.getParkingStatus();
+                parkingStatus = airportSecurity.getParkingAvailability();
         }
         return parkingStatus;
     }
