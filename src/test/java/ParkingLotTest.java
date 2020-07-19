@@ -17,7 +17,7 @@ public class ParkingLotTest {
     //UC1
     @Test
     public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
-        Vehicle vehicle1 = new Vehicle("111");
+        Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         boolean isParked = parkingLot.isVehicleParked();
         Assert.assertTrue(isParked);
@@ -26,10 +26,9 @@ public class ParkingLotTest {
     @Test
     public void givenVehicle_IfPresent_ShouldThrowException() {
         try {
-            Vehicle vehicle1 = new Vehicle("111");
-            Vehicle vehicle2 = new Vehicle("111");
+            Vehicle vehicle1 = new Vehicle();
             parkingLot.parkVehicle(vehicle1);
-            parkingLot.parkVehicle(vehicle2);
+            parkingLot.parkVehicle(vehicle1);
         }catch (ParkingLotException e){
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PRESENT);
         }
@@ -37,37 +36,26 @@ public class ParkingLotTest {
 
     //UC2
     @Test
-    public void givenVehicleNumber_WhenUnParked_ShouldUnParkAndReturnFalse() throws ParkingLotException {
-        Vehicle vehicle1 = new Vehicle("111");
+    public void givenVehicleNumber_WhenUnParked_ShouldUnParkAndReturnFalse() {
+        Vehicle vehicle1 = new Vehicle();
         parkingLot.unParkVehicle(vehicle1);
         boolean isParked = parkingLot.isVehicleParked();
         Assert.assertFalse(isParked);
     }
-//
-//    @Test
-//    public void givenVehicleNumber_IfNotPresent_ShouldReturnFalse() throws ParkingLotException {
-//        String[] vehicleNumber = {"111", "222"};
-//        parkingLot.vehicleParking(vehicleNumber);
-//        boolean isRemoved = parkingLot.vehicleUnparking("333");
-//        Assert.assertFalse(isRemoved);
-//    }
-//
-//    //UC3
-//    @Test
-//    public void givenVehiclesToPark_WhenCapacityExceeds_ShouldThrowException() {
-//        try {
-//            String[] vehicleNumber = {"111", "222", "333"};
-//            parkingLot.vehicleParking(vehicleNumber);
-//        } catch (ParkingLotException e) {
-//            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
-//        }
-//    }
-//
-//    @Test
-//    public void givenVehiclesToPark_IfCapacityFull_ShouldInformAirportSecurity() throws ParkingLotException {
-//        String[] vehicleNumber = {"111", "222", "333"};
-//        parkingLot.vehicleParking(vehicleNumber);
-//        boolean parkingFull = parkingLot.isParkingFull();
-//        Assert.assertTrue(parkingFull);
-//    }
+
+
+    //UC3
+    @Test
+    public void givenVehiclesToPark_WhenCapacityExceeds_ShouldThrowException() {
+        try {
+            Vehicle vehicle1 = new Vehicle();
+            Vehicle vehicle2 = new Vehicle();
+            Vehicle vehicle3 = new Vehicle();
+            parkingLot.parkVehicle(vehicle1);
+            parkingLot.parkVehicle(vehicle2);
+            parkingLot.parkVehicle(vehicle3);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
+        }
+    }
 }

@@ -1,9 +1,8 @@
 package com.bridgelabz.parkinglot.model;
 
 public class Vehicle {
-    public final String vehicleNumber;
+    public String vehicleNumber;
 
-    public Vehicle(String vehicleNumber) {
-        this.vehicleNumber = vehicleNumber;
+    public Vehicle() {
     }
 }
