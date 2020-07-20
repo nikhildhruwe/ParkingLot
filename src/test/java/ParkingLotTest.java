@@ -1,7 +1,8 @@
-import com.bridgelabz.parkinglot.enums.VIEWER;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.utility.AirportSecurity;
+import com.bridgelabz.parkinglot.utility.ParkingLotOwner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,10 +10,14 @@ import org.junit.Test;
 public class ParkingLotTest {
 
     private ParkingLot parkingLot;
+    ParkingLotOwner parkingLotOwner;
+    AirportSecurity airportSecurity;
 
     @Before
     public void setup() {
         parkingLot = new ParkingLot();
+        parkingLotOwner = new ParkingLotOwner();
+        airportSecurity = new AirportSecurity();
     }
 
     //UC1
@@ -64,23 +69,26 @@ public class ParkingLotTest {
     //UC4
     @Test
     public void givenVehiclesToPark_IfCapacityFull_ShouldInformAirportSecurity() throws ParkingLotException {
+        parkingLot.addObserver(airportSecurity);
         Vehicle vehicle1 = new Vehicle();
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
-        boolean isParkingFull = parkingLot.isParkingFull(VIEWER.AIRPORT_SECURITY);
-        Assert.assertTrue(isParkingFull);
+        boolean parkingAvailability = airportSecurity.getParkingAvailability();
+        Assert.assertFalse(parkingAvailability);
     }
 
     //UC5
     @Test
     public void givenCapacityIsFull_WhenUnParked_ShouldInformParkingLotOwner() throws ParkingLotException {
+        parkingLot.addObserver(parkingLotOwner);
+        parkingLot.addObserver(airportSecurity);
         Vehicle vehicle1 = new Vehicle();
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
         parkingLot.unParkVehicle(vehicle1);
-        boolean isParkingFull = parkingLot.isParkingFull(VIEWER.OWNER);
-        Assert.assertFalse(isParkingFull);
+        boolean isParkingFull = parkingLotOwner.getParkingAvailability();
+        Assert.assertTrue(isParkingFull);
     }
 }
