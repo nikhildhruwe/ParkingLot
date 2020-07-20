@@ -103,4 +103,16 @@ public class ParkingLotTest {
         int slotNumber = parkingLot.getSlotNumber(vehicle2);
         Assert.assertEquals(2,slotNumber);
     }
+    
+    //UC7
+    @Test
+    public void givenVehicleToUnPark_WhenFound_ShouldUnParkAndReturnParkingStatus() throws ParkingLotException {
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle vehicle1 = new Vehicle();
+        parkingLot.parkVehicle(vehicle1);
+        int slotNumber = parkingLot.getSlotNumber(vehicle1);
+        parkingLot.unParkVehicle(slotNumber);
+        boolean isVehicleParked = parkingLot.isVehicleParked(vehicle1);
+        Assert.assertFalse(isVehicleParked);
+    }
 }

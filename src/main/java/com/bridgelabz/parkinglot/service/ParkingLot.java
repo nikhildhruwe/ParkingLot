@@ -66,4 +66,9 @@ public class ParkingLot {
     public boolean isVehicleParked(Vehicle vehicle) {
         return parkingList.contains(vehicle);
     }
+
+    public void unParkVehicle(int slotNumber) {
+        Vehicle vehicle = parkingSlot[slotNumber - 1];
+        this.unParkVehicle(vehicle);
+    }
 }
