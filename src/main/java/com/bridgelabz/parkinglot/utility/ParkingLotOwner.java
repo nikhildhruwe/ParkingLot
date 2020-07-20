@@ -2,6 +2,7 @@ package com.bridgelabz.parkinglot.utility;
 
 public class ParkingLotOwner implements ParkingLotObserver {
     private boolean parking;
+    static int lotNumber = 1;
 
     public boolean getParkingCapacity() {
         return parking;
@@ -10,5 +11,9 @@ public class ParkingLotOwner implements ParkingLotObserver {
     @Override
     public void setParkingCapacity(boolean parking) {
         this.parking = parking;
+    }
+
+    public int getKey() {
+        return lotNumber++;
     }
 }
