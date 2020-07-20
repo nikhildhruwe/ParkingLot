@@ -7,7 +7,6 @@ public class Attendant {
 
     public int parkVehicle() {
        return parkingLotOwner.getKey();
-
     }
 
 }
