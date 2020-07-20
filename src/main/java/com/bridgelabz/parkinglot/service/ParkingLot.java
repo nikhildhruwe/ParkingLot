@@ -35,19 +35,19 @@ public class ParkingLot {
                     ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
         if (parkingList.size() == MAX_CAPACITY)
-            this.notifyAllObservers(false);
+            this.notifyAllObservers(true);
     }
 
     public void unParkVehicle(Vehicle vehicle) {
         if (parkingList.contains(vehicle)) {
             parkingList.remove(vehicle);
-            this.notifyAllObservers(true);
+            this.notifyAllObservers(false);
         }
     }
 
     private void notifyAllObservers(boolean parkingStatus) {
         for (ParkingLotObserver observer : observerList)
-            observer.setParkingAvailability(parkingStatus);
+            observer.setParkingCapacity(parkingStatus);
     }
 
     public boolean isVehicleParked(Vehicle vehicle) {

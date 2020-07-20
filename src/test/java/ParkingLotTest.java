@@ -74,8 +74,8 @@ public class ParkingLotTest {
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
-        boolean parkingAvailability = airportSecurity.getParkingAvailability();
-        Assert.assertFalse(parkingAvailability);
+        boolean isParkingFull = airportSecurity.getParkingCapacity();
+        Assert.assertTrue(isParkingFull);
     }
 
     //UC5
@@ -88,7 +88,7 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
         parkingLot.unParkVehicle(vehicle1);
-        boolean isParkingFull = parkingLotOwner.getParkingAvailability();
-        Assert.assertTrue(isParkingFull);
+        boolean isParkingFull = parkingLotOwner.getParkingCapacity();
+        Assert.assertFalse(isParkingFull);
     }
 }

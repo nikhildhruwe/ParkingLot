@@ -3,12 +3,12 @@ package com.bridgelabz.parkinglot.utility;
 public class AirportSecurity implements  ParkingLotObserver{
     private boolean parkingStatus;
 
-    public boolean getParkingAvailability() {
+    public boolean getParkingCapacity() {
         return parkingStatus;
     }
 
     @Override
-    public void setParkingAvailability(boolean parkingStatus) {
+    public void setParkingCapacity(boolean parkingStatus) {
         this.parkingStatus = parkingStatus;
     }
 }
