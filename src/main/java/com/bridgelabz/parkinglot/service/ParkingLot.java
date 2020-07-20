@@ -28,7 +28,7 @@ public class ParkingLot {
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (parkingList.size() < MAX_CAPACITY)
             parkingList.add(vehicle);
-        else if (parkingList.size() == MAX_CAPACITY) {
+        else{
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
