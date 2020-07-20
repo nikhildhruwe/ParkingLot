@@ -29,7 +29,7 @@ public class ParkingLot {
         if (parkingList.size() < MAX_CAPACITY)
             parkingList.add(vehicle);
         else{
-            throw new ParkingLotException("Present in parking lot",
+            throw new ParkingLotException("Maximum capacity exceeded",
                     ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
         if (parkingList.size() == MAX_CAPACITY)
