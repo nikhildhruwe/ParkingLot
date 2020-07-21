@@ -2,7 +2,7 @@ package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
-import com.bridgelabz.parkinglot.utility.ParkingLotObserver;
+import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
 import java.util.ArrayList;
 

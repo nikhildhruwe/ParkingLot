@@ -1,7 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.model.Vehicle;
-import com.bridgelabz.parkinglot.utility.ParkingLotOwner;
+import com.bridgelabz.parkinglot.observer.ParkingLotOwner;
 
 import java.util.ArrayList;
 
