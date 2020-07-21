@@ -15,7 +15,7 @@ public class ParkingLotTest {
 
     @Before
     public void setup() {
-        parkingLot = new ParkingLot();
+        parkingLot = new ParkingLot(2);
         parkingLotOwner = new ParkingLotOwner();
         airportSecurity = new AirportSecurity();
     }

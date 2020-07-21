@@ -8,17 +8,18 @@ import java.util.ArrayList;
 
 
 public class ParkingLot {
-
-    private static final int MAX_CAPACITY = 2;
+    private final int maxCapacity;
     private ArrayList<Vehicle> parkingList;
 
     private final ArrayList<ParkingLotObserver> observerList;
     private final Attendant attendant;
+    private int currentCapacity = 0;
 
-    public ParkingLot() {
+    public ParkingLot(int capacity) {
         this.parkingList = new ArrayList<>();
         this.observerList = new ArrayList<>();
         this.attendant = new Attendant();
+        this.maxCapacity = capacity;
     }
 
     public void addObserver(ParkingLotObserver observer) {
@@ -29,13 +30,14 @@ public class ParkingLot {
         if (parkingList.contains(vehicle))
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (parkingList.size() < MAX_CAPACITY) {
+        if (currentCapacity < maxCapacity) {
             parkingList = attendant.parkVehicle(parkingList, vehicle);
-        } else if (parkingList.size() == MAX_CAPACITY) {
+            this.currentCapacity++;
+        } else if (currentCapacity == maxCapacity) {
             throw new ParkingLotException("Parking Capacity is full",
                     ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         }
-        if (parkingList.size() == MAX_CAPACITY)
+        if (currentCapacity == maxCapacity)
             this.notifyAllObservers(true);
     }
 
@@ -45,7 +47,11 @@ public class ParkingLot {
 
     public void unParkVehicle(Vehicle vehicle) {
         if (parkingList.contains(vehicle)) {
-            parkingList.remove(vehicle);
+            {
+                int slotNumber = parkingList.indexOf(vehicle);
+                parkingList.set(slotNumber, null);
+                this.currentCapacity--;
+            }
             this.notifyAllObservers(false);
         }
     }
