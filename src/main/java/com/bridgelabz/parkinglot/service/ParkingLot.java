@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 public class ParkingLot {
 
-
     private final int maxCapacity;
     private ArrayList<Vehicle> parkingList;
 
@@ -32,7 +31,7 @@ public class ParkingLot {
         if (parkingList.contains(vehicle))
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if ( currentCapacity < maxCapacity) {
+        if (currentCapacity < maxCapacity) {
             parkingList = attendant.parkVehicle(parkingList, vehicle);
             this.currentCapacity++;
         } else if (currentCapacity == maxCapacity) {

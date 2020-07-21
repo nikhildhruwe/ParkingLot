@@ -23,6 +23,6 @@ public class ParkingLotOwner implements ParkingLotObserver {
                 return slotKey;
             slotKey++;
         }
-        return  slotKey;
+        return slotKey;
     }
 }
