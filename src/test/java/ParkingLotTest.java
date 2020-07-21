@@ -117,4 +117,14 @@ public class ParkingLotTest {
         boolean isVehicleParked = parkingLot.isVehicleParked(vehicle1);
         Assert.assertFalse(isVehicleParked);
     }
+
+    @Test
+    public void givenVehicle_WhenParked_ShouldInformOwner() throws ParkingLotException {
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle vehicle1 = new Vehicle();
+        parkingLot.parkVehicle(vehicle1);
+        int slotNumber = parkingLot.getSlotNumber(vehicle1);
+        boolean parkingSlotUsed = parkingLotOwner.isParkingSlotUsed(slotNumber);
+        Assert.assertTrue(parkingSlotUsed);
+    }
 }
