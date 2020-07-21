@@ -1,4 +1,4 @@
-package com.bridgelabz.parkinglot.utility;
+package com.bridgelabz.parkinglot.observer;
 
 public class AirportSecurity implements  ParkingLotObserver{
     private boolean parkingStatus;

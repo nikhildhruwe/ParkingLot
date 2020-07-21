@@ -1,8 +1,8 @@
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.model.Vehicle;
-import com.bridgelabz.parkinglot.utility.AirportSecurity;
-import com.bridgelabz.parkinglot.utility.ParkingLotOwner;
+import com.bridgelabz.parkinglot.observer.AirportSecurity;
+import com.bridgelabz.parkinglot.observer.ParkingLotOwner;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,7 +15,7 @@ public class ParkingLotTest {
 
     @Before
     public void setup() {
-        parkingLot = new ParkingLot();
+        parkingLot = new ParkingLot(2);
         parkingLotOwner = new ParkingLotOwner();
         airportSecurity = new AirportSecurity();
     }
@@ -100,6 +100,8 @@ public class ParkingLotTest {
         Vehicle vehicle2 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
+        parkingLot.unParkVehicle(vehicle1);
+        parkingLot.parkVehicle(vehicle1);
         int slotNumber = parkingLot.getSlotNumber(vehicle2);
         Assert.assertEquals(2, slotNumber);
     }
