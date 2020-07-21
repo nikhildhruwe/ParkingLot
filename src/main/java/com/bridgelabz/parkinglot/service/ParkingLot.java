@@ -12,19 +12,18 @@ import java.util.Arrays;
 public class ParkingLot {
 
     private static final int MAX_CAPACITY = 2;
-    private static final int SLOT_CAPACITY = 2;
     private final ArrayList<Vehicle> parkingList;
 
     private final ArrayList<ParkingLotObserver> observerList;
     private final Attendant attendant;
     public int key;
-    public Vehicle[] parkingSlot;
+    private Vehicle[] parkingSlot;
 
     public ParkingLot() {
         this.parkingList = new ArrayList<>();
         this.observerList = new ArrayList<>();
         this.attendant = new Attendant();
-        this.parkingSlot = new Vehicle[SLOT_CAPACITY];
+        this.parkingSlot = new Vehicle[MAX_CAPACITY];
     }
 
     public void addObserver(ParkingLotObserver observer) {

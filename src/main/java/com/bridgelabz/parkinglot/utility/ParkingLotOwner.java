@@ -2,7 +2,7 @@ package com.bridgelabz.parkinglot.utility;
 
 public class ParkingLotOwner implements ParkingLotObserver {
     private boolean parking;
-    static int lotNumber = 1;
+    public int lotNumber = 1;
 
     public boolean getParkingCapacity() {
         return parking;
