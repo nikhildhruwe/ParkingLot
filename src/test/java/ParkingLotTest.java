@@ -91,7 +91,7 @@ public class ParkingLotTest {
         boolean isParkingFull = parkingLotOwner.getParkingCapacity();
         Assert.assertFalse(isParkingFull);
     }
-    
+
     //UC6
     @Test
     public void givenVehicleToAttendant_WhenParkedAccordingToOwner_ShouldReturnSlotNumber() throws ParkingLotException {
@@ -101,6 +101,6 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle2);
         int slotNumber = parkingLot.getSlotNumber(vehicle2);
-        Assert.assertEquals(2,slotNumber);
+        Assert.assertEquals(2, slotNumber);
     }
 }
