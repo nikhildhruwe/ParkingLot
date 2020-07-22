@@ -9,15 +9,16 @@ import java.util.stream.IntStream;
 public class Attendant {
     ParkingLotOwner parkingLotOwner = new ParkingLotOwner();
 
-    private void initializeList(ArrayList<Vehicle> initialList) {
+
+    private void initializeList(ArrayList<ParkingDetails> initialList, ParkingDetails parkingDetails) {
         if (initialList.isEmpty())
-            IntStream.rangeClosed(1, 2).<Vehicle>mapToObj(slot -> null).forEach(initialList::add);
+            IntStream.range(0, 2).mapToObj(slot -> parkingDetails).forEach(initialList::add);
     }
 
-    public ArrayList<Vehicle> parkVehicle(ArrayList<Vehicle> parkingList, Vehicle vehicle) {
-        this.initializeList(parkingList);
-        int slotKey = parkingLotOwner.getSlotKey(parkingList);
-        parkingList.set(slotKey, vehicle);
+    public ArrayList<ParkingDetails> parkVehicle(ArrayList<ParkingDetails> parkingList, Vehicle vehicle, ParkingDetails parkingDetails) {
+        this.initializeList(parkingList, parkingDetails);
+        int slotKey = parkingLotOwner.getSlotKey(parkingList, parkingDetails);
+        parkingList.set(slotKey, new ParkingDetails(vehicle));
         return parkingList;
     }
 }

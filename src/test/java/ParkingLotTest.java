@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 public class ParkingLotTest {
 
@@ -105,7 +106,7 @@ public class ParkingLotTest {
         parkingLot.unParkVehicle(vehicle1);
         parkingLot.parkVehicle(vehicle1);
         int slotNumber = parkingLot.getSlotNumber(vehicle2);
-        Assert.assertEquals(2, slotNumber);
+        Assert.assertEquals(1, slotNumber);
     }
 
     //UC7
@@ -120,12 +121,14 @@ public class ParkingLotTest {
         Assert.assertFalse(isVehicleParked);
     }
 
+    //UC8
     @Test
     public void givenVehicle_WhenParked_ShouldInformOwner() throws ParkingLotException {
         parkingLot.addObserver(parkingLotOwner);
+        LocalDateTime currentTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
         LocalDateTime parkTime = parkingLot.getParkTime(vehicle1);
-
+        Assert.assertEquals(currentTime, parkTime);
     }
 }

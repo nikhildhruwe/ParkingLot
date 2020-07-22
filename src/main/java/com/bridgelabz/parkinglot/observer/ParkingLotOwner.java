@@ -1,12 +1,12 @@
 package com.bridgelabz.parkinglot.observer;
 
-import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.service.ParkingDetails;
 
 import java.util.ArrayList;
 
 public class ParkingLotOwner implements ParkingLotObserver {
     private boolean parking;
-    public ArrayList<Boolean> parkingSlotList = new ArrayList<>();
+
 
     public boolean getParkingCapacity() {
         return parking;
@@ -17,10 +17,10 @@ public class ParkingLotOwner implements ParkingLotObserver {
         this.parking = parking;
     }
 
-    public int getSlotKey(ArrayList<Vehicle> parkingList) {
+    public int getSlotKey(ArrayList<ParkingDetails> parkingList, ParkingDetails details) {
         int slotKey = 0;
-        for (Vehicle vehicle : parkingList) {
-            if (vehicle == null)
+        for (ParkingDetails parkingDetails : parkingList) {
+            if (parkingDetails == details)
                 return slotKey;
             slotKey++;
         }
