@@ -12,7 +12,6 @@ public class ParkingLot {
     private final int maxCapacity;
     private ArrayList<ParkingDetails> parkingList;
 
-
     ParkingDetails parkingDetails = new ParkingDetails();
     private final ArrayList<ParkingLotObserver> observerList;
     private final Attendant attendant;
@@ -46,7 +45,8 @@ public class ParkingLot {
     }
 
     public int getSlotNumber(Vehicle vehicle) {
-        ParkingDetails parkingDetails = parkingList.stream().filter(slot -> slot.getVehicle().equals(vehicle)).findFirst().get();
+        ParkingDetails parkingDetails = parkingList.stream()
+                                                .filter(slot -> slot.getVehicle().equals(vehicle)).findFirst().get();
         return parkingList.indexOf(parkingDetails);
     }
 

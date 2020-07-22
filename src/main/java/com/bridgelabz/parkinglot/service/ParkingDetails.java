@@ -32,7 +32,6 @@ public class ParkingDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParkingDetails that = (ParkingDetails) o;
-        return Objects.equals(vehicle, that.vehicle) &&
-                Objects.equals(time, that.time);
+        return Objects.equals(vehicle, that.vehicle);
     }
 }
