@@ -4,6 +4,7 @@ import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 
@@ -15,6 +16,7 @@ public class ParkingLot {
     private final ArrayList<ParkingLotObserver> observerList;
     private final Attendant attendant;
     private int currentCapacity = 0;
+
 
     public ParkingLot(int capacity) {
         this.parkingList = new ArrayList<>();
@@ -33,6 +35,7 @@ public class ParkingLot {
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (currentCapacity < maxCapacity) {
             parkingList = attendant.parkVehicle(parkingList, vehicle);
+            this.setParkingTime(vehicle);
             this.currentCapacity++;
         } else if (currentCapacity == maxCapacity) {
             throw new ParkingLotException("Parking Capacity is full",
@@ -40,6 +43,11 @@ public class ParkingLot {
         }
         if (currentCapacity == maxCapacity)
             this.notifyAllObservers(true);
+    }
+
+    private void setParkingTime(Vehicle vehicle) {
+        ParkingDetails parkingDetails = new ParkingDetails(vehicle);
+        parkingDetails.setParkedTime(LocalDateTime.now());
     }
 
     public int getSlotNumber(Vehicle vehicle) {
@@ -70,4 +78,8 @@ public class ParkingLot {
         Vehicle vehicle = parkingList.get(slotNumber - 1);
         this.unParkVehicle(vehicle);
     }
+
+//    public LocalDateTime getParkTime(Vehicle vehicle1) {
+//
+//    }
 }

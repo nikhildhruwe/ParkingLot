@@ -18,7 +18,6 @@ public class Attendant {
         this.initializeList(parkingList);
         int slotKey = parkingLotOwner.getSlotKey(parkingList);
         parkingList.set(slotKey, vehicle);
-        parkingLotOwner.informOwnerAboutParkingSlot(slotKey);
         return parkingList;
     }
 }

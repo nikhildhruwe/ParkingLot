@@ -7,6 +7,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.time.LocalDateTime;
+
 public class ParkingLotTest {
 
     private ParkingLot parkingLot;
@@ -123,8 +125,7 @@ public class ParkingLotTest {
         parkingLot.addObserver(parkingLotOwner);
         Vehicle vehicle1 = new Vehicle();
         parkingLot.parkVehicle(vehicle1);
-        int slotNumber = parkingLot.getSlotNumber(vehicle1);
-        boolean parkingSlotUsed = parkingLotOwner.isParkingSlotUsed(slotNumber);
-        Assert.assertTrue(parkingSlotUsed);
+        LocalDateTime parkTime = parkingLot.getParkTime(vehicle1);
+
     }
 }
