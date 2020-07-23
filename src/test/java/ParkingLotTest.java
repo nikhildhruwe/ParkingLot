@@ -3,12 +3,14 @@ import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.AirportSecurity;
 import com.bridgelabz.parkinglot.observer.ParkingLotOwner;
+import com.bridgelabz.parkinglot.service.ParkingLotSystem;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public class ParkingLotTest {
 
@@ -18,7 +20,7 @@ public class ParkingLotTest {
 
     @Before
     public void setup() {
-        parkingLot = new ParkingLot(2);
+        parkingLot = new ParkingLot( 3);
         parkingLotOwner = new ParkingLotOwner();
         airportSecurity = new AirportSecurity();
     }
@@ -117,7 +119,7 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(secondVehicle);
         parkingLot.unParkVehicle(firstVehicle);
         parkingLot.parkVehicle(firstVehicle);
-        int slotNumber = parkingLot.vehicleSlotNumber(secondVehicle);
+        int slotNumber = parkingLot.getVehicleSlotNumber(secondVehicle);
         Assert.assertEquals(1, slotNumber);
     }
 
@@ -127,7 +129,7 @@ public class ParkingLotTest {
         parkingLot.addObserver(parkingLotOwner);
         Vehicle firstVehicle = new Vehicle();
         parkingLot.parkVehicle(firstVehicle);
-        int slotNumber = parkingLot.vehicleSlotNumber(firstVehicle);
+        int slotNumber = parkingLot.getVehicleSlotNumber(firstVehicle);
         parkingLot.unParkVehicle(slotNumber);
         boolean isVehicleParked = parkingLot.isVehicleParked(firstVehicle);
         Assert.assertFalse(isVehicleParked);
@@ -142,5 +144,25 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(firstVehicle);
         LocalDateTime parkTime = parkingLot.getParkTime(firstVehicle);
         Assert.assertEquals(currentTime, parkTime);
+    }
+
+    //UC9
+    @Test
+    public void givenVehiclesToPark_WhenThereIsMultipleLots_ShouldBeEvenlyDistributedInParkingLots() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle firstVehicle = new Vehicle();
+        Vehicle secondVehicle = new Vehicle();
+        Vehicle thirdVehicle = new Vehicle();
+        Vehicle fourthVehicle = new Vehicle();
+        Vehicle fifthVehicle = new Vehicle();
+        parkingLotSystem.parkVehicle(firstVehicle);
+        parkingLotSystem.parkVehicle(secondVehicle);
+        parkingLotSystem.parkVehicle(thirdVehicle);
+        parkingLotSystem.parkVehicle(fourthVehicle);
+        parkingLotSystem.parkVehicle(fifthVehicle);
+        int[] vehicleLocation = parkingLotSystem.getVehicleLocation(fifthVehicle);
+        Assert.assertEquals(vehicleLocation[0],2);
+        Assert.assertEquals(vehicleLocation[1],2);
     }
 }
