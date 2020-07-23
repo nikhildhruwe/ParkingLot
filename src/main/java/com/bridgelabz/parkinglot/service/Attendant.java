@@ -1,5 +1,6 @@
 package com.bridgelabz.parkinglot.service;
 
+import com.bridgelabz.parkinglot.model.ParkingDetails;
 import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.util.ArrayList;

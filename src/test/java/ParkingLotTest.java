@@ -135,7 +135,7 @@ public class ParkingLotTest {
 
     //UC8
     @Test
-    public void givenVehicle_WhenParked_ShouldInformOwner() {
+    public void givenVehicle_WhenParked_ShouldReturnParkingTimeOfVehicle() {
         parkingLot.addObserver(parkingLotOwner);
         LocalDateTime currentTime = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
         Vehicle firstVehicle = new Vehicle();
