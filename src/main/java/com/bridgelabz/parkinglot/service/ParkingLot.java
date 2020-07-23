@@ -35,9 +35,10 @@ public class ParkingLot {
         observerList.add(observer);
     }
 
-    public int getVehicleCount(){
+    public int getVehicleCount() {
         return vehicleCount;
     }
+
     public void parkVehicle(Vehicle vehicle) throws ParkingLotException {
         if (this.isVehicleParked(vehicle))
             throw new ParkingLotException("Present in parking lot",
@@ -67,7 +68,7 @@ public class ParkingLot {
 
     public int getVehicleSlotNumber(Vehicle vehicle) {
         ParkingSlotDetails parkingSlotDetails = parkingSlotList.stream()
-                                                .filter(slot -> slot.getVehicle().equals(vehicle)).findFirst().get();
+                .filter(slot -> slot.getVehicle().equals(vehicle)).findFirst().get();
         return parkingSlotList.indexOf(parkingSlotDetails);
     }
 

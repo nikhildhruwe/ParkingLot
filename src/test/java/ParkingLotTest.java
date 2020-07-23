@@ -1,8 +1,8 @@
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.AirportSecurity;
 import com.bridgelabz.parkinglot.observer.ParkingLotOwner;
+import com.bridgelabz.parkinglot.service.ParkingLot;
 import com.bridgelabz.parkinglot.service.ParkingLotSystem;
 import org.junit.Assert;
 import org.junit.Before;
@@ -10,7 +10,6 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 
 public class ParkingLotTest {
 
@@ -167,7 +166,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehiclesToParkI_IfVehicleAlreadyPresentInAnyParkingLot_ShouldThrowException() {
+    public void givenVehiclesToPark_IfVehicleAlreadyPresentInAnyParkingLot_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         parkingLot.addObserver(parkingLotOwner);
         Vehicle firstVehicle = new Vehicle();
@@ -184,7 +183,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenVehiclesToPark_IfVehiclesExceedParkingLotCapacity_ShouldThrowException() {
+    public void givenVehiclesToPark_IfNoSpaceInAnyParkingLot_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(2, 1);
         parkingLot.addObserver(parkingLotOwner);
         Vehicle firstVehicle = new Vehicle();
