@@ -1,7 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 
-
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
+import com.bridgelabz.parkinglot.model.ParkingSlotDetails;
 import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.util.ArrayList;
@@ -21,15 +21,14 @@ public class ParkingLotSystem {
     }
 
     public void parkVehicle(Vehicle vehicle) {
-        boolean isParked = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
-        if (isParked)
+        boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
+        if (isPresent)
             throw new ParkingLotException("Vehicle Already Parked", ParkingLotException.ExceptionType.ALREADY_PRESENT);
+        int sum = IntStream.range(0, numberOfLots).map(i -> parkingLotList.get(i).getVehicleCount()).sum();
+        if (sum >= numberOfLots*capacity)
+        throw new ParkingLotException("Parking lot capacity full", ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         ParkingLot parkingLot = this.getParkingLot();
         parkingLot.parkVehicle(vehicle);
-    }
-
-    public void unParkVehicle(Vehicle vehicle){
-        IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.get(i).unParkVehicle(vehicle));
     }
 
     private ParkingLot getParkingLot() {

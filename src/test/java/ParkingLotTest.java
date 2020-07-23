@@ -20,7 +20,7 @@ public class ParkingLotTest {
 
     @Before
     public void setup() {
-        parkingLot = new ParkingLot( 3);
+        parkingLot = new ParkingLot(3);
         parkingLotOwner = new ParkingLotOwner();
         airportSecurity = new AirportSecurity();
     }
@@ -162,7 +162,40 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthVehicle);
         parkingLotSystem.parkVehicle(fifthVehicle);
         int[] vehicleLocation = parkingLotSystem.getVehicleLocation(fifthVehicle);
-        Assert.assertEquals(vehicleLocation[0],2);
-        Assert.assertEquals(vehicleLocation[1],2);
+        Assert.assertEquals(vehicleLocation[0], 2);
+        Assert.assertEquals(vehicleLocation[1], 2);
+    }
+
+    @Test
+    public void givenVehiclesToParkI_IfVehicleAlreadyPresentInAnyParkingLot_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle firstVehicle = new Vehicle();
+        Vehicle secondVehicle = new Vehicle();
+        Vehicle thirdVehicle = new Vehicle();
+        try {
+            parkingLotSystem.parkVehicle(firstVehicle);
+            parkingLotSystem.parkVehicle(secondVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PRESENT);
+        }
+    }
+
+    @Test
+    public void givenVehiclesToPark_IfVehiclesExceedParkingLotCapacity_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(2, 1);
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle firstVehicle = new Vehicle();
+        Vehicle secondVehicle = new Vehicle();
+        Vehicle thirdVehicle = new Vehicle();
+        try {
+            parkingLotSystem.parkVehicle(firstVehicle);
+            parkingLotSystem.parkVehicle(secondVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
+        }
     }
 }
