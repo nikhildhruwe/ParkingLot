@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
-public class ParkingDetails {
+public class ParkingSlotDetails {
     private Vehicle vehicle;
     private LocalDateTime time;
 
-    public ParkingDetails(Vehicle vehicle) {
+    public ParkingSlotDetails(Vehicle vehicle) {
         this.vehicle = vehicle;
         this.time = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 
-    public ParkingDetails() {
+    public ParkingSlotDetails() {
     }
 
     public LocalDateTime getParkedTime()
@@ -29,7 +29,7 @@ public class ParkingDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        ParkingDetails that = (ParkingDetails) o;
+        ParkingSlotDetails that = (ParkingSlotDetails) o;
         return Objects.equals(vehicle, that.vehicle);
     }
 }

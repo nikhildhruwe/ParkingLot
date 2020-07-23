@@ -117,7 +117,7 @@ public class ParkingLotTest {
         parkingLot.parkVehicle(secondVehicle);
         parkingLot.unParkVehicle(firstVehicle);
         parkingLot.parkVehicle(firstVehicle);
-        int slotNumber = parkingLot.getSlotNumber(secondVehicle);
+        int slotNumber = parkingLot.vehicleSlotNumber(secondVehicle);
         Assert.assertEquals(1, slotNumber);
     }
 
@@ -127,7 +127,7 @@ public class ParkingLotTest {
         parkingLot.addObserver(parkingLotOwner);
         Vehicle firstVehicle = new Vehicle();
         parkingLot.parkVehicle(firstVehicle);
-        int slotNumber = parkingLot.getSlotNumber(firstVehicle);
+        int slotNumber = parkingLot.vehicleSlotNumber(firstVehicle);
         parkingLot.unParkVehicle(slotNumber);
         boolean isVehicleParked = parkingLot.isVehicleParked(firstVehicle);
         Assert.assertFalse(isVehicleParked);
