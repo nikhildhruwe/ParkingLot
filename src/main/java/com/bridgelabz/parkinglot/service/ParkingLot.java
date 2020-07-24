@@ -44,7 +44,7 @@ public class ParkingLot {
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (currentCapacity < maxCapacity) {
-            int slotKey = this.getSlotKey(parkingSlotList);
+            int slotKey = this.getSlotToParkVehicle(parkingSlotList);
             parkingSlotList.set(slotKey, new ParkingSlotDetails(vehicle));
             this.currentCapacity++;
             this.vehicleCount++;
@@ -56,7 +56,7 @@ public class ParkingLot {
             this.notifyAllObservers(true);
     }
 
-    public int getSlotKey(ArrayList<ParkingSlotDetails> parkingSlotList) {
+    public int getSlotToParkVehicle(ArrayList<ParkingSlotDetails> parkingSlotList) {
         int slotKey = 0;
         for (ParkingSlotDetails parkingDetail : parkingSlotList) {
             if (parkingDetail == this.parkingSlotDetails)

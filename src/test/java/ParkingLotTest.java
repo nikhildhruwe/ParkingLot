@@ -1,3 +1,4 @@
+import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.AirportSecurity;
@@ -155,11 +156,11 @@ public class ParkingLotTest {
         Vehicle thirdVehicle = new Vehicle();
         Vehicle fourthVehicle = new Vehicle();
         Vehicle fifthVehicle = new Vehicle();
-        parkingLotSystem.parkVehicle(firstVehicle);
-        parkingLotSystem.parkVehicle(secondVehicle);
-        parkingLotSystem.parkVehicle(thirdVehicle);
-        parkingLotSystem.parkVehicle(fourthVehicle);
-        parkingLotSystem.parkVehicle(fifthVehicle);
+        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(fifthVehicle, DriverType.NORMAL);
         int[] vehicleLocation = parkingLotSystem.getVehicleLocation(fifthVehicle);
         Assert.assertEquals(vehicleLocation[0], 2);
         Assert.assertEquals(vehicleLocation[1], 2);
@@ -173,10 +174,10 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         try {
-            parkingLotSystem.parkVehicle(firstVehicle);
-            parkingLotSystem.parkVehicle(secondVehicle);
-            parkingLotSystem.parkVehicle(thirdVehicle);
-            parkingLotSystem.parkVehicle(thirdVehicle);
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PRESENT);
         }
@@ -190,11 +191,28 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         try {
-            parkingLotSystem.parkVehicle(firstVehicle);
-            parkingLotSystem.parkVehicle(secondVehicle);
-            parkingLotSystem.parkVehicle(thirdVehicle);
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
+            System.out.println(e.getMessage());
         }
+    }
+
+    //UC10
+    @Test
+    public void givenDriverType_IfHandicap_ShouldALotNearestParkingSlot() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        parkingLot.addObserver(parkingLotOwner);
+        Vehicle firstVehicle = new Vehicle();
+        Vehicle secondVehicle = new Vehicle();
+        Vehicle thirdVehicle = new Vehicle();
+        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.HANDICAP);
+        int[] vehicleLocation = parkingLotSystem.getVehicleLocation(thirdVehicle);
+        Assert.assertEquals(vehicleLocation[0], 1);
+        Assert.assertEquals(vehicleLocation[1], 2);
     }
 }
