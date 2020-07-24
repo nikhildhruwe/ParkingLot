@@ -28,7 +28,7 @@ public class ParkingLot {
 
     private void initialise(ArrayList<ParkingSlotDetails> parkingSlotList) {
         if (parkingSlotList.isEmpty())
-            IntStream.range(0, 2).mapToObj(slot -> parkingSlotDetails).forEach(parkingSlotList::add);
+            IntStream.range(0, maxCapacity).mapToObj(slot -> parkingSlotDetails).forEach(parkingSlotList::add);
     }
 
     public void addObserver(ParkingLotObserver observer) {

@@ -208,12 +208,14 @@ public class ParkingLotTest {
         Vehicle firstVehicle = new Vehicle();
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
+        Vehicle fourthVehicle = new Vehicle();
         parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
         parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
         parkingLotSystem.parkVehicle(thirdVehicle, DriverType.HANDICAP);
-        int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(thirdVehicle);
-        int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(thirdVehicle);
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP);
+        int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
+        int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
         Assert.assertEquals(1,vehicleLotLocation);
-        Assert.assertEquals(2,vehicleSlotNumber);
+        Assert.assertEquals(3,vehicleSlotNumber);
     }
 }
