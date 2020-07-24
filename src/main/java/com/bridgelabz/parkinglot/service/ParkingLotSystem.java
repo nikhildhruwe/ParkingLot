@@ -23,9 +23,6 @@ public class ParkingLotSystem {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Parked", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        int sum = IntStream.range(0, numberOfLots).map(i -> parkingLotList.get(i).getVehicleCount()).sum();
-        if (sum >= numberOfLots * capacity)
-            throw new ParkingLotException("Parking lot capacity full", ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
         ParkingLot parkingLot = this.getParkingLot();
         parkingLot.parkVehicle(vehicle);
     }
@@ -36,15 +33,19 @@ public class ParkingLotSystem {
         return sortedList.get(0);
     }
 
-    public int[] getVehicleLocation(Vehicle vehicle) {
-        int[] array = new int[2];
-        ParkingLot vehicleLocation = parkingLotList.stream()
+    private ParkingLot getVehicleLocation(Vehicle vehicle) {
+        return parkingLotList.stream()
                 .filter(parkingLot -> parkingLot.isVehicleParked(vehicle))
                 .findFirst().get();
-        int lotNumber = parkingLotList.indexOf(vehicleLocation) + 1;
-        int slotNumber = vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
-        array[0] = lotNumber;
-        array[1] = slotNumber;
-        return array;
+    }
+
+    public int getVehicleLotNumber(Vehicle vehicle){
+        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
+        return parkingLotList.indexOf(vehicleLocation) + 1;
+    }
+
+    public int getVehicleSlotNumber(Vehicle vehicle){
+        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
+        return vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
     }
 }

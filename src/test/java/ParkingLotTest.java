@@ -19,7 +19,7 @@ public class ParkingLotTest {
 
     @Before
     public void setup() {
-        parkingLot = new ParkingLot(3);
+        parkingLot = new ParkingLot(2);
         parkingLotOwner = new ParkingLotOwner();
         airportSecurity = new AirportSecurity();
     }
@@ -160,9 +160,10 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(thirdVehicle);
         parkingLotSystem.parkVehicle(fourthVehicle);
         parkingLotSystem.parkVehicle(fifthVehicle);
-        int[] vehicleLocation = parkingLotSystem.getVehicleLocation(fifthVehicle);
-        Assert.assertEquals(vehicleLocation[0], 2);
-        Assert.assertEquals(vehicleLocation[1], 2);
+        int lotNumber = parkingLotSystem.getVehicleLotNumber(fifthVehicle);
+        int slotNumber = parkingLotSystem.getVehicleSlotNumber(fifthVehicle);
+        Assert.assertEquals(lotNumber, 2);
+        Assert.assertEquals(slotNumber, 2);
     }
 
     @Test
