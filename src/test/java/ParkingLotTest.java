@@ -158,12 +158,13 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(firstVehicle);
         parkingLotSystem.parkVehicle(secondVehicle);
         parkingLotSystem.parkVehicle(thirdVehicle);
+        parkingLotSystem.unParkVehicle(secondVehicle);
         parkingLotSystem.parkVehicle(fourthVehicle);
         parkingLotSystem.parkVehicle(fifthVehicle);
-        int lotNumber = parkingLotSystem.getVehicleLotNumber(fifthVehicle);
-        int slotNumber = parkingLotSystem.getVehicleSlotNumber(fifthVehicle);
-        Assert.assertEquals(lotNumber, 2);
-        Assert.assertEquals(slotNumber, 2);
+        int lotNumber = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
+        int slotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
+        Assert.assertEquals(2, lotNumber);
+        Assert.assertEquals(1, slotNumber);
     }
 
     @Test

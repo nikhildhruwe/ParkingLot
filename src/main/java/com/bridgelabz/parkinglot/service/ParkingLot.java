@@ -28,7 +28,7 @@ public class ParkingLot {
 
     private void initialise(ArrayList<ParkingSlotDetails> parkingSlotList) {
         if (parkingSlotList.isEmpty())
-            IntStream.range(0, 2).mapToObj(slot -> parkingSlotDetails).forEach(parkingSlotList::add);
+            IntStream.range(0, 2).mapToObj(slot -> this.parkingSlotDetails).forEach(parkingSlotList::add);
     }
 
     public void addObserver(ParkingLotObserver observer) {
@@ -76,8 +76,9 @@ public class ParkingLot {
         if (this.isVehicleParked(vehicle)) {
             {
                 int slotNumber = this.getVehicleSlotNumber(vehicle);
-                parkingSlotList.set(slotNumber, parkingSlotDetails);
+                parkingSlotList.set(slotNumber, this.parkingSlotDetails);
                 this.currentCapacity--;
+                this.vehicleCount--;
             }
             this.notifyAllObservers(false);
         }

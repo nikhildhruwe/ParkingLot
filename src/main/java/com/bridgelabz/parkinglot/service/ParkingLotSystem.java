@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.stream.IntStream;
 
 public class ParkingLotSystem {
-    private final int numberOfLots;
     public final int capacity;
+    public final int numberOfLots;
     public ArrayList<ParkingLot> parkingLotList;
 
     public ParkingLotSystem(int numberOfLots, int capacity) {
@@ -17,6 +17,14 @@ public class ParkingLotSystem {
         this.capacity = capacity;
         this.parkingLotList = new ArrayList<>();
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
+    }
+
+    public void unParkVehicle(Vehicle vehicle) {
+        parkingLotList.stream().
+                filter(parkingLot -> parkingLot.isVehicleParked(vehicle)).
+                findFirst().
+                get().
+                unParkVehicle(vehicle);
     }
 
     public void parkVehicle(Vehicle vehicle) {
