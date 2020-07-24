@@ -40,15 +40,20 @@ public class ParkingLotSystem {
             return sortedList.get(0);
     }
 
-    public int[] getVehicleLocation(Vehicle vehicle) {
-        int[] array = new int[2];
-        ParkingLot vehicleLocation = parkingLotList.stream()
+    private ParkingLot getVehicleLocation(Vehicle vehicle) {
+            return parkingLotList.stream()
                 .filter(parkingLot -> parkingLot.isVehicleParked(vehicle))
                 .findFirst().get();
-        int lotNumber = parkingLotList.indexOf(vehicleLocation) + 1;
-        int slotNumber = vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
-        array[0] = lotNumber;
-        array[1] = slotNumber;
-        return array;
     }
+
+    public int getVehicleLotNumber(Vehicle vehicle){
+        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
+        return parkingLotList.indexOf(vehicleLocation) + 1;
+    }
+
+    public int getVehicleSlotNumber(Vehicle vehicle){
+        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
+        return vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
+    }
+
 }
