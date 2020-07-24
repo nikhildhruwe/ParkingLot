@@ -155,16 +155,15 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         Vehicle fourthVehicle = new Vehicle();
-        Vehicle fifthVehicle = new Vehicle();
         parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
         parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
         parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+        parkingLotSystem.unParkVehicle(secondVehicle);
         parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(fifthVehicle, DriverType.NORMAL);
-        int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fifthVehicle);
-        int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fifthVehicle);
-        Assert.assertEquals(vehicleLotLocation, 2);
-        Assert.assertEquals(vehicleSlotNumber, 2);
+        int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
+        int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
+        Assert.assertEquals(2,vehicleLotLocation);
+        Assert.assertEquals(1,vehicleSlotNumber);
     }
 
     @Test
@@ -214,7 +213,7 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(thirdVehicle, DriverType.HANDICAP);
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(thirdVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(thirdVehicle);
-        Assert.assertEquals(vehicleLotLocation, 1);
-        Assert.assertEquals(vehicleSlotNumber, 2);
+        Assert.assertEquals(1,vehicleLotLocation);
+        Assert.assertEquals(2,vehicleSlotNumber);
     }
 }

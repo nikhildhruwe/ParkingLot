@@ -34,6 +34,14 @@ public class ParkingLotSystem {
         }
     }
 
+    public void unParkVehicle(Vehicle vehicle) {
+        parkingLotList.stream().
+                filter(parkingLot -> parkingLot.isVehicleParked(vehicle)).
+                findFirst().
+                get().
+                unParkVehicle(vehicle);
+    }
+
     private ParkingLot getParkingLot() {
             ArrayList<ParkingLot> sortedList = new ArrayList<>(parkingLotList);
             sortedList.sort(Comparator.comparing(ParkingLot::getVehicleCount));

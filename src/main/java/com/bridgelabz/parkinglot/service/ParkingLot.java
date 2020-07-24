@@ -1,7 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.model.ParkingSlotDetails;
+import com.bridgelabz.parkinglot.utility.ParkingSlotDetails;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
@@ -78,6 +78,7 @@ public class ParkingLot {
                 int slotNumber = this.getVehicleSlotNumber(vehicle);
                 parkingSlotList.set(slotNumber, parkingSlotDetails);
                 this.currentCapacity--;
+                this.vehicleCount--;
             }
             this.notifyAllObservers(false);
         }
