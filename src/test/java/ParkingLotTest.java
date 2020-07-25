@@ -1,4 +1,5 @@
 import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
 import com.bridgelabz.parkinglot.observer.AirportSecurity;
@@ -217,5 +218,41 @@ public class ParkingLotTest {
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
         Assert.assertEquals(1,vehicleLotLocation);
         Assert.assertEquals(3,vehicleSlotNumber);
+    }
+
+    @Test
+    public void givenVehicleToPark_IfNotPresent_ShouldThrowException() {
+        try {
+            ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+            parkingLot.addObserver(parkingLotOwner);
+            Vehicle firstVehicle = new Vehicle();
+            Vehicle secondVehicle = new Vehicle();
+            Vehicle thirdVehicle = new Vehicle();
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.unParkVehicle(thirdVehicle);
+        }catch (ParkingLotException e){
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+            System.out.println(e.getMessage());
+        }
+    }
+
+    //UC11
+    @Test
+    public void givenLargeVehicle_WhenParked_ShouldParkInLotWithHighestNumberOfSlots() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL);
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL);
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL);
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE);
+
+        parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.HANDICAP);
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP);
+        int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
+        int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
+        Assert.assertEquals(3,vehicleLotLocation);
+        Assert.assertEquals(1,vehicleSlotNumber);
     }
 }

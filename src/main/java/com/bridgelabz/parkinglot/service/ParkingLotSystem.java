@@ -1,6 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
 
@@ -11,7 +12,7 @@ import java.util.stream.IntStream;
 public class ParkingLotSystem {
     public final int numberOfLots;
     public final int capacity;
-    public ArrayList<ParkingLot> parkingLotList;
+    private final ArrayList<ParkingLot> parkingLotList;
 
     public ParkingLotSystem(int numberOfLots, int capacity) {
         this.numberOfLots = numberOfLots;
@@ -23,8 +24,13 @@ public class ParkingLotSystem {
     public void parkVehicle(Vehicle vehicle, DriverType driverType) {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
         if (isPresent)
-            throw new ParkingLotException("Vehicle Already Parked", ParkingLotException.ExceptionType.ALREADY_PRESENT);
+            throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (driverType.equals(DriverType.HANDICAP)){
+            if (vehicle.getSize().equals(VehicleSize.LARGE)) {
+                ParkingLot parkingLot = this.getParkingLot();
+                parkingLot.parkVehicle(vehicle);
+                return;
+            }
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
                     findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(vehicle));
         }
@@ -64,5 +70,4 @@ public class ParkingLotSystem {
         ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
         return vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
     }
-
 }
