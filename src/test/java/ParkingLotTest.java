@@ -12,6 +12,8 @@ import org.junit.Test;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Arrays;
+import java.util.List;
 
 public class ParkingLotTest {
 
@@ -241,10 +243,10 @@ public class ParkingLotTest {
     @Test
     public void givenLargeVehicle_WhenParked_ShouldParkInLotWithHighestNumberOfSlots() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
-        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, "blue");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, "green");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "grey");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE, "red");
 
         parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL);
         parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL);
@@ -254,5 +256,43 @@ public class ParkingLotTest {
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
         Assert.assertEquals(3,vehicleLotLocation);
         Assert.assertEquals(1,vehicleSlotNumber);
+    }
+    
+    //UC12
+    @Test
+    public void givenVehiclesInParkingLot_IfColorIsWhite_ShouldReturnLocation() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, "blue");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, "white");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "orange");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, "white");
+
+        parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(fourthVehicle,DriverType.NORMAL);
+
+        List<String> locationList = parkingLotSystem.getVehicleByColor("white");
+        List<String> expectedList = Arrays.asList("2-1","1-2");
+        Assert.assertEquals(expectedList, locationList);
+    }
+
+    @Test
+    public void givenVehiclesInParkingLot_IfRequiredVehicleColorIsNotPresent_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, "blue");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, "white");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "orange");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, "white");
+        try {
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL);
+
+            parkingLotSystem.getVehicleByColor("red");
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_COLOR);
+        }
     }
 }

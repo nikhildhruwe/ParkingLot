@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
 public class ParkingLot {
 
     private final int maxCapacity;
-    private final ArrayList<ParkingSlotDetails> parkingSlotList;
+    public final ArrayList<ParkingSlotDetails> parkingSlotList;
 
     ParkingSlotDetails parkingSlotDetails = new ParkingSlotDetails();
     private final ArrayList<ParkingLotObserver> observerList;
