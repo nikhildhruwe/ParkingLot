@@ -3,10 +3,9 @@ package com.bridgelabz.parkinglot.model;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 
 public class Vehicle {
-    private final VehicleSize size;
+    private VehicleSize size;
 
     public Vehicle() {
-        this.size = VehicleSize.SMALL;
     }
 
     public Vehicle(VehicleSize size) {

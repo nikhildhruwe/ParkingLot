@@ -26,7 +26,7 @@ public class ParkingLotSystem {
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (driverType.equals(DriverType.HANDICAP)){
-            if (vehicle.getSize().equals(VehicleSize.LARGE)) {
+            if ( (vehicle.getSize() != null) && vehicle.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
                 parkingLot.parkVehicle(vehicle);
                 return;
