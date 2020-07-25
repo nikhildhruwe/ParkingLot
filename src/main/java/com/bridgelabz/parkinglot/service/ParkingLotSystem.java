@@ -7,6 +7,7 @@ import com.bridgelabz.parkinglot.model.Vehicle;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.stream.IntStream;
 
 public class ParkingLotSystem {
@@ -26,7 +27,7 @@ public class ParkingLotSystem {
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (driverType.equals(DriverType.HANDICAP)){
-            if (vehicle.getSize().equals(VehicleSize.LARGE)) {
+            if(vehicle.getSize() != null && vehicle.getSize().equals(VehicleSize.LARGE)){
                 ParkingLot parkingLot = this.getParkingLot();
                 parkingLot.parkVehicle(vehicle);
                 return;
@@ -69,5 +70,18 @@ public class ParkingLotSystem {
     public int getVehicleSlotNumber(Vehicle vehicle){
         ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
         return vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
+    }
+
+    public List<String> getVehicleByColor(String vehicleColor) {
+        List<String> vehicleLocationList = new ArrayList<>();
+        for ( int i = 0; i < numberOfLots ; i++ )
+            for (int j = 0; j < capacity; j++) {
+                Vehicle vehicle = parkingLotList.get(j).parkingSlotList.get(i).getVehicle();
+                if (vehicle != null && vehicle.getColor().equals(vehicleColor))
+                    vehicleLocationList.add(this.getVehicleLotNumber(vehicle) + "-" + this.getVehicleSlotNumber(vehicle));
+        }
+        if(vehicleLocationList.size() == 0)
+            throw new ParkingLotException("Given Color Not Present", ParkingLotException.ExceptionType.INVALID_COLOR);
+        return vehicleLocationList;
     }
 }
