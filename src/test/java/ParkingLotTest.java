@@ -276,4 +276,23 @@ public class ParkingLotTest {
         List<String> expectedList = Arrays.asList("2-1","1-2");
         Assert.assertEquals(expectedList, locationList);
     }
+
+    @Test
+    public void givenVehiclesInParkingLot_IfRequiredVehicleColorIsNotPresent_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, "blue");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, "white");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "orange");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, "white");
+        try {
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL);
+
+            parkingLotSystem.getVehicleByColor("red");
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_COLOR);
+        }
+    }
 }
