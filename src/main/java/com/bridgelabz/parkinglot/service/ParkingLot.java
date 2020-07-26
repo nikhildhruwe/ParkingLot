@@ -39,13 +39,13 @@ public class ParkingLot {
         return vehicleCount;
     }
 
-    public void parkVehicle(Vehicle vehicle) throws ParkingLotException {
+    public void parkVehicle(Vehicle vehicle, String attendant) throws ParkingLotException {
         if (this.isVehicleParked(vehicle))
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (currentCapacity < maxCapacity) {
             int slotKey = this.getSlotToParkVehicle(parkingSlotList);
-            parkingSlotList.set(slotKey, new ParkingSlotDetails(vehicle));
+            parkingSlotList.set(slotKey, new ParkingSlotDetails(vehicle, attendant));
             this.currentCapacity++;
             this.vehicleCount++;
         } else if (currentCapacity == maxCapacity) {

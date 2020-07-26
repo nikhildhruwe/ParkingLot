@@ -7,12 +7,14 @@ import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class ParkingSlotDetails {
+    private String attendant;
     private Vehicle vehicle;
     private LocalDateTime time;
 
-    public ParkingSlotDetails(Vehicle vehicle) {
+    public ParkingSlotDetails(Vehicle vehicle, String attendant) {
         this.vehicle = vehicle;
         this.time = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
+        this.attendant = attendant;
     }
 
     public ParkingSlotDetails() {
@@ -25,6 +27,10 @@ public class ParkingSlotDetails {
 
     public Vehicle getVehicle(){
         return vehicle;
+    }
+
+    public String getAttendant() {
+        return attendant;
     }
 
     @Override

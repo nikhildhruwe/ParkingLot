@@ -1,6 +1,7 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.enums.DriverType;
+import com.bridgelabz.parkinglot.enums.VehicleCompany;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Vehicle;
@@ -22,22 +23,22 @@ public class ParkingLotSystem {
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
     }
 
-    public void parkVehicle(Vehicle vehicle, DriverType driverType) {
+    public void parkVehicle(Vehicle vehicle, DriverType driverType, String attendant) {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (driverType.equals(DriverType.HANDICAP)){
             if ( (vehicle.getSize() != null) && vehicle.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
-                parkingLot.parkVehicle(vehicle);
+                parkingLot.parkVehicle(vehicle, attendant);
                 return;
             }
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
-                    findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(vehicle));
+                    findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(vehicle, attendant));
         }
         if (driverType.equals(DriverType.NORMAL)){
         ParkingLot parkingLot = this.getParkingLot();
-        parkingLot.parkVehicle(vehicle);
+        parkingLot.parkVehicle(vehicle, attendant);
         }
     }
 
@@ -83,5 +84,18 @@ public class ParkingLotSystem {
         if(vehicleLocationList.size() == 0)
             throw new ParkingLotException("Given Color Not Present", ParkingLotException.ExceptionType.INVALID_COLOR);
         return vehicleLocationList;
+    }
+
+    public List<String> getVehicleDetailsByCompanyAndColor(VehicleCompany company, String color) {
+        List<String> vehicleDetails = new ArrayList<>();
+        for ( int i = 0; i < numberOfLots ; i++ )
+            for (int j = 0; j < capacity; j++) {
+                Vehicle vehicle = parkingLotList.get(j).parkingSlotList.get(i).getVehicle();
+                if (vehicle != null && vehicle.getCompany().equals(company) && vehicle.getColor().equals(color))
+                    vehicleDetails.add("Lot: "+this.getVehicleLotNumber(vehicle)
+                            + ",Slot: " + this.getVehicleSlotNumber(vehicle)
+                            + ",Attendant: " + parkingLotList.get(j).parkingSlotList.get(i).getAttendant());
+            }
+        return vehicleDetails;
     }
 }
