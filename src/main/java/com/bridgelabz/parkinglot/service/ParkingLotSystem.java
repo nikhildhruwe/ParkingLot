@@ -6,8 +6,6 @@ import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Car;
 
-import java.time.Duration;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -25,11 +23,11 @@ public class ParkingLotSystem {
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
     }
 
-    public void parkVehicle(Car car, DriverType driverType, String attendant) {
+    public void parkVehicle(Car car, String attendant) {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(car));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (driverType.equals(DriverType.HANDICAP)) {
+        if (car.getDriverType().equals(DriverType.HANDICAP)) {
             if ((car.getSize() != null) && car.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
                 parkingLot.parkVehicle(car, attendant);
@@ -38,7 +36,7 @@ public class ParkingLotSystem {
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
                     findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(car, attendant));
         }
-        if (driverType.equals(DriverType.NORMAL)) {
+        if (car.getDriverType().equals(DriverType.NORMAL)) {
             ParkingLot parkingLot = this.getParkingLot();
             parkingLot.parkVehicle(car, attendant);
         }
@@ -134,4 +132,20 @@ public class ParkingLotSystem {
             throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
+
+    public List<String> getVehicleDetailsOfHandicapCarFromGivenLot(int lotNumber) {
+        List<String> vehicleDetails = new ArrayList<>();
+        if (lotNumber> numberOfLots)
+            throw new ParkingLotException("Lot Number Does Not Exist", ParkingLotException.ExceptionType.INVALID_LOT);
+        for (int i = 0; i <capacity; i++){
+            Car car = parkingLotList.get(lotNumber - 1).parkingSlotList.get(i).getCar();
+            if (car != null && car.getSize().equals(VehicleSize.SMALL) && car.getDriverType().equals(DriverType.HANDICAP))
+                vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
+                    + ",Slot: " + this.getVehicleSlotNumber(car)
+                    + ",Number Plate: " + car.getNumberPlate());
+           }
+        if (vehicleDetails.isEmpty())
+            throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        return vehicleDetails;
+        }
 }
