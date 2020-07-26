@@ -20,12 +20,11 @@ public class ParkingSlotDetails {
     public ParkingSlotDetails() {
     }
 
-    public LocalDateTime getParkedTime()
-    {
+    public LocalDateTime getParkedTime() {
         return time;
     }
 
-    public Car getCar(){
+    public Car getCar() {
         return car;
     }
 

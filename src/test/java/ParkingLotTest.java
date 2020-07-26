@@ -389,4 +389,14 @@ public class ParkingLotTest {
         Assert.assertEquals(expectedDetails, vehicleDetailsWithInProvidedTime);
 
     }
+
+    @Test
+    public void givenNoVehicles_IfCheckedVehiclesParkedWithInGivenTime_ShouldThrowException() {
+       try {
+           ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+           parkingLotSystem.getVehicleDetailsWithInProvidedTime(10);
+       }catch (ParkingLotException e){
+           Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+       }
+    }
 }
