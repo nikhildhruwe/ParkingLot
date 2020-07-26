@@ -334,4 +334,24 @@ public class ParkingLotTest {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         }
     }
+
+    //UC14
+    @Test
+    public void givenVehiclesToPark_IfGivenCompanyVehiclePresent_ShouldReturnParkingDetailsOfVehicle() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "blue", "a123");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "white", "b234");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue", "c456");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "grey", "d567");
+
+        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "firstAttendant");
+        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "secondAttendant");
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL, "thirdAttendant");
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL, "firstAttendant");
+
+        List<String> vehicleParkingDetails = parkingLotSystem.getVehicleDetailsByCompany(VehicleCompany.BMW);
+        List<String> expectedDetails = Arrays.asList("Lot: 2,Slot: 1,Number Plate: b234",
+                                                        "Lot: 1,Slot: 2,Number Plate: d567");
+        Assert.assertEquals(expectedDetails,vehicleParkingDetails);
+    }
 }

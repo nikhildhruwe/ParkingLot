@@ -101,4 +101,19 @@ public class ParkingLotSystem {
             throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
+
+    public List<String> getVehicleDetailsByCompany(VehicleCompany company) {
+        List<String> vehicleDetails = new ArrayList<>();
+        for (int i = 0; i < numberOfLots; i++)
+            for (int j = 0; j < capacity; j++) {
+                Vehicle vehicle = parkingLotList.get(j).parkingSlotList.get(i).getVehicle();
+                if (vehicle != null && vehicle.getCompany().equals(company))
+                    vehicleDetails.add("Lot: " + this.getVehicleLotNumber(vehicle)
+                            + ",Slot: " + this.getVehicleSlotNumber(vehicle)
+                            + ",Number Plate: " + vehicle.getNumberPlate());
+            }
+        if (vehicleDetails.size() == 0)
+            throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        return vehicleDetails;
+    }
 }
