@@ -369,4 +369,24 @@ public class ParkingLotTest {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         }
     }
+
+    //UC15
+    @Test
+    public void givenVehiclesToPark_IfParkedWithInLast30Minutes_ShouldReturnVehicleParkingDetails() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Car firstCar = new Car(VehicleSize.LARGE, VehicleCompany.TOYOTA, "blue", "a123");
+        Car secondCar = new Car(VehicleSize.SMALL, VehicleCompany.BMW, "white", "b234");
+        Car thirdCar = new Car(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue", "c456");
+
+        parkingLotSystem.parkVehicle(firstCar, DriverType.NORMAL, "firstAttendant");
+        parkingLotSystem.parkVehicle(secondCar, DriverType.NORMAL, "secondAttendant");
+        parkingLotSystem.parkVehicle(thirdCar, DriverType.NORMAL, "thirdAttendant");
+
+        List<String> vehicleDetailsWithInProvidedTime = parkingLotSystem.getVehicleDetailsWithInProvidedTime(30);
+        List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Number Plate: a123",
+                                                    "Lot: 2,Slot: 1,Number Plate: b234",
+                                                    "Lot: 3,Slot: 1,Number Plate: c456");
+        Assert.assertEquals(expectedDetails, vehicleDetailsWithInProvidedTime);
+
+    }
 }

@@ -5,7 +5,9 @@ import com.bridgelabz.parkinglot.utility.ParkingSlotDetails;
 import com.bridgelabz.parkinglot.model.Car;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
@@ -100,5 +102,9 @@ public class ParkingLot {
 
     public LocalDateTime getParkTime(Car car) {
         return parkingSlotList.get(this.getVehicleSlotNumber(car)).getParkedTime();
+    }
+
+    public int getParkingDuration(Car car) {
+        return LocalDateTime.now().getMinute() - this.getParkTime(car).getMinute();
     }
 }

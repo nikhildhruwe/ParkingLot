@@ -6,6 +6,8 @@ import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.model.Car;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -113,6 +115,21 @@ public class ParkingLotSystem {
                             + ",Number Plate: " + car.getNumberPlate());
             }
         if (vehicleDetails.size() == 0)
+            throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        return vehicleDetails;
+    }
+
+    public List<String> getVehicleDetailsWithInProvidedTime(int minutes) {
+        List<String> vehicleDetails = new ArrayList<>();
+        for (int i = 0; i < numberOfLots; i++)
+            for (int j = 0; j < capacity; j++) {
+                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+                if (car != null && parkingLotList.get(j).getParkingDuration(car) <= minutes)
+                    vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
+                            + ",Slot: " + this.getVehicleSlotNumber(car)
+                            + ",Number Plate: " + car.getNumberPlate());
+            }
+        if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
