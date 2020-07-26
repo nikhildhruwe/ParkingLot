@@ -2,7 +2,7 @@ package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
 import com.bridgelabz.parkinglot.utility.ParkingSlotDetails;
-import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.model.Car;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
 import java.time.LocalDateTime;
@@ -39,13 +39,13 @@ public class ParkingLot {
         return vehicleCount;
     }
 
-    public void parkVehicle(Vehicle vehicle) throws ParkingLotException {
-        if (this.isVehicleParked(vehicle))
+    public void parkVehicle(Car car) throws ParkingLotException {
+        if (this.isVehicleParked(car))
             throw new ParkingLotException("Present in parking lot",
                     ParkingLotException.ExceptionType.ALREADY_PRESENT);
         if (currentCapacity < maxCapacity) {
             int slotKey = this.getSlotToParkVehicle(parkingSlotList);
-            parkingSlotList.set(slotKey, new ParkingSlotDetails(vehicle));
+            parkingSlotList.set(slotKey, new ParkingSlotDetails(car));
             this.currentCapacity++;
             this.vehicleCount++;
         } else if (currentCapacity == maxCapacity) {
@@ -66,16 +66,16 @@ public class ParkingLot {
         return slotKey;
     }
 
-    public int getVehicleSlotNumber(Vehicle vehicle) {
+    public int getVehicleSlotNumber(Car car) {
         ParkingSlotDetails parkingSlotDetails = parkingSlotList.stream()
-                .filter(slot -> slot.getVehicle().equals(vehicle)).findFirst().get();
+                .filter(slot -> slot.getCar().equals(car)).findFirst().get();
         return parkingSlotList.indexOf(parkingSlotDetails);
     }
 
-    public void unParkVehicle(Vehicle vehicle) {
-        if (this.isVehicleParked(vehicle)) {
+    public void unParkVehicle(Car car) {
+        if (this.isVehicleParked(car)) {
             {
-                int slotNumber = this.getVehicleSlotNumber(vehicle);
+                int slotNumber = this.getVehicleSlotNumber(car);
                 parkingSlotList.set(slotNumber, parkingSlotDetails);
                 this.currentCapacity--;
                 this.vehicleCount--;
@@ -89,16 +89,16 @@ public class ParkingLot {
             observer.setParkingCapacity(parkingStatus);
     }
 
-    public boolean isVehicleParked(Vehicle vehicle) {
-        return parkingSlotList.stream().anyMatch(slot -> slot.getVehicle() == vehicle);
+    public boolean isVehicleParked(Car car) {
+        return parkingSlotList.stream().anyMatch(slot -> slot.getCar() == car);
     }
 
     public void unParkVehicle(int slotNumber) {
         ParkingSlotDetails parkingSlotDetails = parkingSlotList.get(slotNumber);
-        this.unParkVehicle(parkingSlotDetails.getVehicle());
+        this.unParkVehicle(parkingSlotDetails.getCar());
     }
 
-    public LocalDateTime getParkTime(Vehicle vehicle) {
-        return parkingSlotList.get(this.getVehicleSlotNumber(vehicle)).getParkedTime();
+    public LocalDateTime getParkTime(Car car) {
+        return parkingSlotList.get(this.getVehicleSlotNumber(car)).getParkedTime();
     }
 }

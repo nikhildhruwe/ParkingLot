@@ -3,7 +3,7 @@ package com.bridgelabz.parkinglot.service;
 import com.bridgelabz.parkinglot.enums.DriverType;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.model.Car;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -22,30 +22,35 @@ public class ParkingLotSystem {
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
     }
 
-    public void parkVehicle(Vehicle vehicle, DriverType driverType) {
-        boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
+    public void parkVehicle(Car car) {
+        boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(car));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (driverType.equals(DriverType.HANDICAP)){
-            if(vehicle.getSize() != null && vehicle.getSize().equals(VehicleSize.LARGE)){
+        if (car.getDriverType() == null){
+            ParkingLot parkingLot = this.getParkingLot();
+            parkingLot.parkVehicle(car);
+            return;
+        }
+        if (car.getDriverType().equals(DriverType.HANDICAP)){
+            if ( (car.getSize() != null) && car.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
-                parkingLot.parkVehicle(vehicle);
+                parkingLot.parkVehicle(car);
                 return;
             }
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
-                    findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(vehicle));
+                    findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(car));
         }
-        if (driverType.equals(DriverType.NORMAL)){
-        ParkingLot parkingLot = this.getParkingLot();
-        parkingLot.parkVehicle(vehicle);
+        if (car.getDriverType().equals(DriverType.NORMAL)){
+            ParkingLot parkingLot = this.getParkingLot();
+            parkingLot.parkVehicle(car);
         }
     }
 
-    public void unParkVehicle(Vehicle vehicle) {
+    public void unParkVehicle(Car car) {
         parkingLotList.stream().
-                filter(parkingLot -> parkingLot.isVehicleParked(vehicle)).
+                filter(parkingLot -> parkingLot.isVehicleParked(car)).
                 findAny().
-                ifPresentOrElse(slot -> slot.unParkVehicle(vehicle), () ->
+                ifPresentOrElse(slot -> slot.unParkVehicle(car), () ->
                 { throw new ParkingLotException(" No vehicle Present", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
                 });
     }
@@ -56,29 +61,29 @@ public class ParkingLotSystem {
             return sortedList.get(0);
     }
 
-    private ParkingLot getVehicleLocation(Vehicle vehicle) {
+    private ParkingLot getVehicleLocation(Car car) {
             return parkingLotList.stream()
-                .filter(parkingLot -> parkingLot.isVehicleParked(vehicle))
+                .filter(parkingLot -> parkingLot.isVehicleParked(car))
                 .findFirst().get();
     }
 
-    public int getVehicleLotNumber(Vehicle vehicle){
-        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
+    public int getVehicleLotNumber(Car car){
+        ParkingLot vehicleLocation = this.getVehicleLocation(car);
         return parkingLotList.indexOf(vehicleLocation) + 1;
     }
 
-    public int getVehicleSlotNumber(Vehicle vehicle){
-        ParkingLot vehicleLocation = this.getVehicleLocation(vehicle);
-        return vehicleLocation.getVehicleSlotNumber(vehicle) + 1;
+    public int getVehicleSlotNumber(Car car){
+        ParkingLot vehicleLocation = this.getVehicleLocation(car);
+        return vehicleLocation.getVehicleSlotNumber(car) + 1;
     }
 
     public List<String> getVehicleByColor(String vehicleColor) {
         List<String> vehicleLocationList = new ArrayList<>();
         for ( int i = 0; i < numberOfLots ; i++ )
             for (int j = 0; j < capacity; j++) {
-                Vehicle vehicle = parkingLotList.get(j).parkingSlotList.get(i).getVehicle();
-                if (vehicle != null && vehicle.getColor().equals(vehicleColor))
-                    vehicleLocationList.add(this.getVehicleLotNumber(vehicle) + "-" + this.getVehicleSlotNumber(vehicle));
+                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+                if (car != null && car.getColor().equals(vehicleColor))
+                    vehicleLocationList.add(this.getVehicleLotNumber(car) + "-" + this.getVehicleSlotNumber(car));
         }
         if(vehicleLocationList.size() == 0)
             throw new ParkingLotException("Given Color Not Present", ParkingLotException.ExceptionType.INVALID_COLOR);

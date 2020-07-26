@@ -1,17 +1,17 @@
 package com.bridgelabz.parkinglot.utility;
 
-import com.bridgelabz.parkinglot.model.Vehicle;
+import com.bridgelabz.parkinglot.model.Car;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 public class ParkingSlotDetails {
-    private Vehicle vehicle;
+    private Car car;
     private LocalDateTime time;
 
-    public ParkingSlotDetails(Vehicle vehicle) {
-        this.vehicle = vehicle;
+    public ParkingSlotDetails(Car car) {
+        this.car = car;
         this.time = LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES);
     }
 
@@ -23,8 +23,8 @@ public class ParkingSlotDetails {
         return time;
     }
 
-    public Vehicle getVehicle(){
-        return vehicle;
+    public Car getCar(){
+        return car;
     }
 
     @Override
@@ -32,6 +32,6 @@ public class ParkingSlotDetails {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ParkingSlotDetails that = (ParkingSlotDetails) o;
-        return Objects.equals(vehicle, that.vehicle);
+        return Objects.equals(car, that.car);
     }
 }
