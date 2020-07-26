@@ -401,7 +401,7 @@ public class ParkingLotTest {
 
     //UC16
     @Test
-    public void givenLotNumber_IfSmallCarAndHandicapDriversPresent_ShouldReturnParkingDetails() {
+    public void givenParkingLotNumber_IfSmallCarAndHandicapDriversPresent_ShouldReturnParkingDetail() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.TOYOTA, "blue", "a123");
         Car secondCar = new Car(VehicleSize.SMALL, DriverType.HANDICAP, VehicleCompany.MAHINDRA, "white", "b234");
@@ -420,7 +420,7 @@ public class ParkingLotTest {
     }
 
     @Test
-    public void givenLotNumber_IfSmallCarAndHandicapDriverNotPresent_ShouldReturnParkingDetails() {
+    public void givenParkingLotNumber_IfSmallCarAndHandicapDriverNotPresent_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.TOYOTA, "blue", "a123");
         Car secondCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.MAHINDRA, "white", "b234");
@@ -461,7 +461,7 @@ public class ParkingLotTest {
 
         List<String> vehicleDetailsOfAParkingLot = parkingLotSystem.getVehicleDetailsOfAParkingLot(1);
         List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Number Plate: a123",
-                                                     "Lot: 1,Slot: 2,Number Plate: c456");
+                "Lot: 1,Slot: 2,Number Plate: c456");
         Assert.assertEquals(expectedDetails, vehicleDetailsOfAParkingLot);
     }
 
