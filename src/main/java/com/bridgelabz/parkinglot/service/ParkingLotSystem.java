@@ -79,9 +79,9 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleByColor(String vehicleColor) {
         List<String> vehicleLocationList = new ArrayList<>();
-        for ( int i = 0; i < numberOfLots ; i++ )
-            for (int j = 0; j < capacity; j++) {
-                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+        for ( int slot = 0; slot < capacity ; slot++ )
+            for (int lot = 0; lot < numberOfLots; lot++) {
+                Car car = parkingLotList.get(lot).parkingSlotList.get(slot).getCar();
                 if (car != null && car.getColor().equals(vehicleColor))
                     vehicleLocationList.add(this.getVehicleLotNumber(car) + "-" + this.getVehicleSlotNumber(car));
         }
