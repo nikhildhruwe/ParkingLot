@@ -418,4 +418,18 @@ public class ParkingLotTest {
                 "Lot: 1,Slot: 3,Number Plate: d567");
         Assert.assertEquals(expectedDetails, vehicleDetails);
     }
+
+    @Test
+    public void givenLotNumber_IfSmallCarAndHandicapDriverNotPresent_ShouldReturnParkingDetails() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.TOYOTA, "blue", "a123");
+        Car secondCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.MAHINDRA, "white", "b234");
+        try {
+            parkingLotSystem.parkVehicle(firstCar, "firstAttendant");
+            parkingLotSystem.parkVehicle(secondCar, "secondAttendant");
+            parkingLotSystem.getVehicleDetailsOfHandicapCarFromGivenLot(1);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        }
+    }
 }

@@ -135,17 +135,17 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleDetailsOfHandicapCarFromGivenLot(int lotNumber) {
         List<String> vehicleDetails = new ArrayList<>();
-        if (lotNumber> numberOfLots)
+        if (lotNumber > numberOfLots)
             throw new ParkingLotException("Lot Number Does Not Exist", ParkingLotException.ExceptionType.INVALID_LOT);
-        for (int i = 0; i <capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             Car car = parkingLotList.get(lotNumber - 1).parkingSlotList.get(i).getCar();
             if (car != null && car.getSize().equals(VehicleSize.SMALL) && car.getDriverType().equals(DriverType.HANDICAP))
                 vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
-                    + ",Slot: " + this.getVehicleSlotNumber(car)
-                    + ",Number Plate: " + car.getNumberPlate());
-           }
+                        + ",Slot: " + this.getVehicleSlotNumber(car)
+                        + ",Number Plate: " + car.getNumberPlate());
+        }
         if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
-        }
+    }
 }
