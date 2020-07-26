@@ -301,11 +301,11 @@ public class ParkingLotTest {
     @Test
     public void givenBlueToyotaCar_IfPresent_ShouldReturnLocation() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
-        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "blue");
-        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "white");
-        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue");
-        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.KIA, "grey");
-        Vehicle fifthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "grey");
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "blue", "a123");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "white", "b234");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue", "c456");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.KIA, "grey","d567");
+        Vehicle fifthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "grey", "e899");
 
         parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "firstAttendant");
         parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "secondAttendant");
@@ -314,7 +314,7 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fifthVehicle, DriverType.NORMAL, "secondAttendant");
 
         List<String> vehicleDetails = parkingLotSystem.getVehicleDetailsByCompanyAndColor(VehicleCompany.TOYOTA, "blue");
-        List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Attendant: firstAttendant");
+        List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Attendant: firstAttendant,Number Plate: a123");
         Assert.assertEquals(expectedDetails,vehicleDetails);
     }
 }

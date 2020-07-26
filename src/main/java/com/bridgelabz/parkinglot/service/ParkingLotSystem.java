@@ -94,7 +94,8 @@ public class ParkingLotSystem {
                 if (vehicle != null && vehicle.getCompany().equals(company) && vehicle.getColor().equals(color))
                     vehicleDetails.add("Lot: "+this.getVehicleLotNumber(vehicle)
                             + ",Slot: " + this.getVehicleSlotNumber(vehicle)
-                            + ",Attendant: " + parkingLotList.get(j).parkingSlotList.get(i).getAttendant());
+                            + ",Attendant: " + parkingLotList.get(j).parkingSlotList.get(i).getAttendant()
+                            + ",Number Plate: " + vehicle.getNumberPlate());
             }
         return vehicleDetails;
     }
