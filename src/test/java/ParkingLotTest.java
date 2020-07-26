@@ -156,11 +156,11 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         Vehicle fourthVehicle = new Vehicle();
-        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(firstVehicle);
+        parkingLotSystem.parkVehicle(secondVehicle);
+        parkingLotSystem.parkVehicle(thirdVehicle);
         parkingLotSystem.unParkVehicle(secondVehicle);
-        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL);
+        parkingLotSystem.parkVehicle(fourthVehicle);
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
         Assert.assertEquals(2,vehicleLotLocation);
@@ -175,10 +175,10 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         try {
-            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(firstVehicle);
+            parkingLotSystem.parkVehicle(secondVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PRESENT);
         }
@@ -192,9 +192,9 @@ public class ParkingLotTest {
         Vehicle secondVehicle = new Vehicle();
         Vehicle thirdVehicle = new Vehicle();
         try {
-            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(firstVehicle);
+            parkingLotSystem.parkVehicle(secondVehicle);
+            parkingLotSystem.parkVehicle(thirdVehicle);
         } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.CAPACITY_EXCEEDED);
             System.out.println(e.getMessage());
@@ -206,18 +206,18 @@ public class ParkingLotTest {
     public void givenDriverType_IfHandicap_ShouldALotNearestParkingSlot() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         parkingLot.addObserver(parkingLotOwner);
-        Vehicle firstVehicle = new Vehicle();
-        Vehicle secondVehicle = new Vehicle();
-        Vehicle thirdVehicle = new Vehicle();
-        Vehicle fourthVehicle = new Vehicle();
-        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.HANDICAP);
-        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, DriverType.HANDICAP);
+        parkingLotSystem.parkVehicle(firstVehicle);
+        parkingLotSystem.parkVehicle(secondVehicle);
+        parkingLotSystem.parkVehicle(thirdVehicle);
+        parkingLotSystem.parkVehicle(fourthVehicle);
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
         Assert.assertEquals(1,vehicleLotLocation);
-        Assert.assertEquals(3,vehicleSlotNumber);
+        Assert.assertEquals(2,vehicleSlotNumber);
     }
 
     @Test
@@ -228,8 +228,8 @@ public class ParkingLotTest {
             Vehicle firstVehicle = new Vehicle();
             Vehicle secondVehicle = new Vehicle();
             Vehicle thirdVehicle = new Vehicle();
-            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL);
-            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL);
+            parkingLotSystem.parkVehicle(firstVehicle);
+            parkingLotSystem.parkVehicle(secondVehicle);
             parkingLotSystem.unParkVehicle(thirdVehicle);
         }catch (ParkingLotException e){
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
@@ -241,18 +241,18 @@ public class ParkingLotTest {
     @Test
     public void givenLargeVehicle_WhenParked_ShouldParkInLotWithHighestNumberOfSlots() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
-        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL);
-        Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL,DriverType.NORMAL);
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE, DriverType.HANDICAP);
 
-        parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL);
-        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.HANDICAP);
-        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP);
+        parkingLotSystem.parkVehicle(firstVehicle);
+        parkingLotSystem.parkVehicle(secondVehicle);
+        parkingLotSystem.parkVehicle(thirdVehicle);
+        parkingLotSystem.parkVehicle(fourthVehicle);
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
-        Assert.assertEquals(3,vehicleLotLocation);
-        Assert.assertEquals(1,vehicleSlotNumber);
+        Assert.assertEquals(1,vehicleLotLocation);
+        Assert.assertEquals(2,vehicleSlotNumber);
     }
 }

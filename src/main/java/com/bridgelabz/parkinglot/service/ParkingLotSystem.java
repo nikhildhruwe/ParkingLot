@@ -21,11 +21,16 @@ public class ParkingLotSystem {
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
     }
 
-    public void parkVehicle(Vehicle vehicle, DriverType driverType) {
+    public void parkVehicle(Vehicle vehicle) {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(vehicle));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (driverType.equals(DriverType.HANDICAP)){
+        if (vehicle.getDriverType() == null){
+            ParkingLot parkingLot = this.getParkingLot();
+            parkingLot.parkVehicle(vehicle);
+            return;
+        }
+        if (vehicle.getDriverType().equals(DriverType.HANDICAP)){
             if ( (vehicle.getSize() != null) && vehicle.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
                 parkingLot.parkVehicle(vehicle);
@@ -34,7 +39,7 @@ public class ParkingLotSystem {
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
                     findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(vehicle));
         }
-        if (driverType.equals(DriverType.NORMAL)){
+        if (vehicle.getDriverType().equals(DriverType.NORMAL)){
         ParkingLot parkingLot = this.getParkingLot();
         parkingLot.parkVehicle(vehicle);
         }
