@@ -432,4 +432,36 @@ public class ParkingLotTest {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         }
     }
+
+    @Test
+    public void givenParkingLotNumber_IfLotNotPresent_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.TOYOTA, "blue", "a123");
+        try {
+            parkingLotSystem.parkVehicle(firstCar, "firstAttendant");
+            parkingLotSystem.getVehicleDetailsOfHandicapCarFromGivenLot(4);
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_LOT);
+        }
+    }
+
+    //UC17
+    @Test
+    public void givenVehiclesToPark_IfProper_ShouldReturnDetailsOfAllParkedCars() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.TOYOTA, "blue", "a123");
+        Car secondCar = new Car(VehicleSize.LARGE, DriverType.NORMAL, VehicleCompany.BMW, "white", "b234");
+        Car thirdCar = new Car(VehicleSize.SMALL, DriverType.HANDICAP, VehicleCompany.MARUTI, "blue", "c456");
+        Car fourthCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.BMW, "grey", "d567");
+
+        parkingLotSystem.parkVehicle(firstCar, "firstAttendant");
+        parkingLotSystem.parkVehicle(secondCar, "secondAttendant");
+        parkingLotSystem.parkVehicle(thirdCar, "thirdAttendant");
+        parkingLotSystem.parkVehicle(fourthCar, "firstAttendant");
+
+        List<String> vehicleDetailsOfAParkingLot = parkingLotSystem.getVehicleDetailsOfAParkingLot(1);
+        List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Number Plate: a123",
+                                                     "Lot: 1,Slot: 2,Number Plate: c456");
+        Assert.assertEquals(expectedDetails, vehicleDetailsOfAParkingLot);
+    }
 }
