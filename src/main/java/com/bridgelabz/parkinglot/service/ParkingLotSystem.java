@@ -25,11 +25,11 @@ public class ParkingLotSystem {
         IntStream.range(0, numberOfLots).forEach(i -> parkingLotList.add(new ParkingLot(capacity)));
     }
 
-    public void parkVehicle(Car car, DriverType driverType, String attendant) {
+    public void parkVehicle(Car car, String attendant) {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(car));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (driverType.equals(DriverType.HANDICAP)) {
+        if (car.getDriverType().equals(DriverType.HANDICAP)) {
             if ((car.getSize() != null) && car.getSize().equals(VehicleSize.LARGE)) {
                 ParkingLot parkingLot = this.getParkingLot();
                 parkingLot.parkVehicle(car, attendant);
@@ -38,7 +38,7 @@ public class ParkingLotSystem {
             IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
                     findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(car, attendant));
         }
-        if (driverType.equals(DriverType.NORMAL)) {
+        if (car.getDriverType().equals(DriverType.NORMAL)) {
             ParkingLot parkingLot = this.getParkingLot();
             parkingLot.parkVehicle(car, attendant);
         }
@@ -78,9 +78,9 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleByColor(String vehicleColor) {
         List<String> vehicleLocationList = new ArrayList<>();
-        for (int i = 0; i < numberOfLots; i++)
-            for (int j = 0; j < capacity; j++) {
-                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+        for (int slot = 0; slot < capacity; slot++)
+            for (int lot = 0; lot < numberOfLots; lot++) {
+                Car car = parkingLotList.get(lot).parkingSlotList.get(slot).getCar();
                 if (car != null && car.getColor().equals(vehicleColor))
                     vehicleLocationList.add(this.getVehicleLotNumber(car) + "-" + this.getVehicleSlotNumber(car));
             }
@@ -91,13 +91,13 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleDetailsByCompanyAndColor(VehicleCompany company, String color) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int i = 0; i < numberOfLots; i++)
-            for (int j = 0; j < capacity; j++) {
-                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+        for (int slot = 0; slot < capacity; slot++)
+            for (int lot = 0; lot < numberOfLots; lot++) {
+                Car car = parkingLotList.get(lot).parkingSlotList.get(slot).getCar();
                 if (car != null && car.getCompany().equals(company) && car.getColor().equals(color))
                     vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
                             + ",Slot: " + this.getVehicleSlotNumber(car)
-                            + ",Attendant: " + parkingLotList.get(j).parkingSlotList.get(i).getAttendant()
+                            + ",Attendant: " + parkingLotList.get(lot).parkingSlotList.get(slot).getAttendant()
                             + ",Number Plate: " + car.getNumberPlate());
             }
         if (vehicleDetails.size() == 0)
@@ -107,9 +107,9 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleDetailsByCompany(VehicleCompany company) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int i = 0; i < numberOfLots; i++)
-            for (int j = 0; j < capacity; j++) {
-                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
+        for (int slot = 0; slot < capacity; slot++)
+            for (int lot = 0; lot < numberOfLots; lot++) {
+                Car car = parkingLotList.get(lot).parkingSlotList.get(slot).getCar();
                 if (car != null && car.getCompany().equals(company))
                     vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
                             + ",Slot: " + this.getVehicleSlotNumber(car)
@@ -122,10 +122,10 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleDetailsWithInProvidedTime(int minutes) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int i = 0; i < numberOfLots; i++)
-            for (int j = 0; j < capacity; j++) {
-                Car car = parkingLotList.get(j).parkingSlotList.get(i).getCar();
-                if (car != null && parkingLotList.get(j).getParkingDuration(car) <= minutes)
+        for (int slot = 0; slot < capacity; slot++)
+            for (int lot = 0; lot < numberOfLots; lot++) {
+                Car car = parkingLotList.get(lot).parkingSlotList.get(slot).getCar();
+                if (car != null && parkingLotList.get(lot).getParkingDuration(car) <= minutes)
                     vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
                             + ",Slot: " + this.getVehicleSlotNumber(car)
                             + ",Number Plate: " + car.getNumberPlate());
