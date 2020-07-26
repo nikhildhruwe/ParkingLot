@@ -3,21 +3,21 @@ package com.bridgelabz.parkinglot.model;
 import com.bridgelabz.parkinglot.enums.VehicleCompany;
 import com.bridgelabz.parkinglot.enums.VehicleSize;
 
-public class Vehicle {
+public class Car {
     private String numberPlate;
     private VehicleCompany company;
     private String color;
     private VehicleSize size;
 
-    public Vehicle() {
+    public Car() {
     }
 
-    public Vehicle(VehicleSize size, String color) {
+    public Car(VehicleSize size, String color) {
         this.color = color;
         this.size = size;
     }
 
-    public Vehicle(VehicleSize size, VehicleCompany company, String color, String numberPlate) {
+    public Car(VehicleSize size, VehicleCompany company, String color, String numberPlate) {
         this.color = color;
         this.company = company;
         this.size = size;
