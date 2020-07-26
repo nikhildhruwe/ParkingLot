@@ -166,8 +166,8 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL, "abc");
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
-        Assert.assertEquals(2,vehicleLotLocation);
-        Assert.assertEquals(1,vehicleSlotNumber);
+        Assert.assertEquals(2, vehicleLotLocation);
+        Assert.assertEquals(1, vehicleSlotNumber);
     }
 
     @Test
@@ -219,8 +219,8 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP, "abc");
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
-        Assert.assertEquals(1,vehicleLotLocation);
-        Assert.assertEquals(3,vehicleSlotNumber);
+        Assert.assertEquals(1, vehicleLotLocation);
+        Assert.assertEquals(3, vehicleSlotNumber);
     }
 
     @Test
@@ -234,7 +234,7 @@ public class ParkingLotTest {
             parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "abc");
             parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "abc");
             parkingLotSystem.unParkVehicle(thirdVehicle);
-        }catch (ParkingLotException e){
+        } catch (ParkingLotException e) {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
             System.out.println(e.getMessage());
         }
@@ -249,16 +249,16 @@ public class ParkingLotTest {
         Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "grey");
         Vehicle fourthVehicle = new Vehicle(VehicleSize.LARGE, "red");
 
-        parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL, "abc");
-        parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL, "abc");
-        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.HANDICAP, "abc");
+        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.HANDICAP, "abc");
         parkingLotSystem.parkVehicle(fourthVehicle, DriverType.HANDICAP, "abc");
         int vehicleLotLocation = parkingLotSystem.getVehicleLotNumber(fourthVehicle);
         int vehicleSlotNumber = parkingLotSystem.getVehicleSlotNumber(fourthVehicle);
-        Assert.assertEquals(3,vehicleLotLocation);
-        Assert.assertEquals(1,vehicleSlotNumber);
+        Assert.assertEquals(3, vehicleLotLocation);
+        Assert.assertEquals(1, vehicleSlotNumber);
     }
-    
+
     //UC12
     @Test
     public void givenVehiclesInParkingLot_IfColorIsWhite_ShouldReturnLocation() {
@@ -268,13 +268,13 @@ public class ParkingLotTest {
         Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, "orange");
         Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, "white");
 
-        parkingLotSystem.parkVehicle(firstVehicle,DriverType.NORMAL, "abc");
-        parkingLotSystem.parkVehicle(secondVehicle,DriverType.NORMAL, "abc");
-        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.NORMAL, "abc");
-        parkingLotSystem.parkVehicle(fourthVehicle,DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL, "abc");
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL, "abc");
 
         List<String> locationList = parkingLotSystem.getVehicleByColor("white");
-        List<String> expectedList = Arrays.asList("2-1","1-2");
+        List<String> expectedList = Arrays.asList("2-1", "1-2");
         Assert.assertEquals(expectedList, locationList);
     }
 
@@ -296,7 +296,7 @@ public class ParkingLotTest {
             Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_COLOR);
         }
     }
-    
+
     //UC13
     @Test
     public void givenBlueToyotaCar_IfPresent_ShouldReturnLocation() {
@@ -304,17 +304,34 @@ public class ParkingLotTest {
         Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "blue", "a123");
         Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "white", "b234");
         Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue", "c456");
-        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.KIA, "grey","d567");
+        Vehicle fourthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.KIA, "grey", "d567");
         Vehicle fifthVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.TOYOTA, "grey", "e899");
 
         parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "firstAttendant");
         parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "secondAttendant");
-        parkingLotSystem.parkVehicle(thirdVehicle,DriverType.NORMAL, "thirdAttendant");
-        parkingLotSystem.parkVehicle(fourthVehicle,DriverType.NORMAL, "firstAttendant");
+        parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL, "thirdAttendant");
+        parkingLotSystem.parkVehicle(fourthVehicle, DriverType.NORMAL, "firstAttendant");
         parkingLotSystem.parkVehicle(fifthVehicle, DriverType.NORMAL, "secondAttendant");
 
         List<String> vehicleDetails = parkingLotSystem.getVehicleDetailsByCompanyAndColor(VehicleCompany.TOYOTA, "blue");
         List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 1,Attendant: firstAttendant,Number Plate: a123");
-        Assert.assertEquals(expectedDetails,vehicleDetails);
+        Assert.assertEquals(expectedDetails, vehicleDetails);
+    }
+
+    @Test
+    public void givenBlueToyotaCar_IfNotPresent_ShouldThrowException() {
+        ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
+        Vehicle firstVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MAHINDRA, "blue", "a123");
+        Vehicle secondVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.BMW, "white", "b234");
+        Vehicle thirdVehicle = new Vehicle(VehicleSize.SMALL, VehicleCompany.MARUTI, "blue", "c456");
+        try {
+            parkingLotSystem.parkVehicle(firstVehicle, DriverType.NORMAL, "firstAttendant");
+            parkingLotSystem.parkVehicle(secondVehicle, DriverType.NORMAL, "secondAttendant");
+            parkingLotSystem.parkVehicle(thirdVehicle, DriverType.NORMAL, "thirdAttendant");
+
+            parkingLotSystem.getVehicleDetailsByCompanyAndColor(VehicleCompany.TOYOTA, "blue");
+        } catch (ParkingLotException e) {
+            Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
+        }
     }
 }

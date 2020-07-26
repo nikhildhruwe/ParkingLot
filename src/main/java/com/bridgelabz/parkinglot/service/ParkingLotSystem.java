@@ -97,6 +97,8 @@ public class ParkingLotSystem {
                             + ",Attendant: " + parkingLotList.get(j).parkingSlotList.get(i).getAttendant()
                             + ",Number Plate: " + vehicle.getNumberPlate());
             }
+        if (vehicleDetails.size() == 0)
+            throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
 }
