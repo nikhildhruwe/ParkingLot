@@ -273,7 +273,7 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthCar);
 
         List<String> locationList = parkingLotSystem.getVehicleByColor("white");
-        List<String> expectedList = Arrays.asList("2-1", "1-2");
+        List<String> expectedList = Arrays.asList("1-2", "2-1");
         Assert.assertEquals(expectedList, locationList);
     }
 
