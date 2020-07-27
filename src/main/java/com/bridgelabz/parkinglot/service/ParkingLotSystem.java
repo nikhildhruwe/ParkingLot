@@ -27,19 +27,25 @@ public class ParkingLotSystem {
         boolean isPresent = parkingLotList.stream().anyMatch(slot -> slot.isVehicleParked(car));
         if (isPresent)
             throw new ParkingLotException("Vehicle Already Present", ParkingLotException.ExceptionType.ALREADY_PRESENT);
-        if (car.getDriverType().equals(DriverType.HANDICAP)) {
-            if ((car.getSize() != null) && car.getSize().equals(VehicleSize.LARGE)) {
-                ParkingLot parkingLot = this.getParkingLot();
-                parkingLot.parkVehicle(car, attendant);
-                return;
-            }
-            IntStream.range(0, numberOfLots).filter(index -> parkingLotList.get(index).getVehicleCount() != capacity).
-                    findFirst().ifPresent(i -> parkingLotList.get(i).parkVehicle(car, attendant));
-        }
+        ParkingLot parkingLot = this.getParkingLot(car);
+        parkingLot.parkVehicle(car, attendant);
+    }
+
+    private ParkingLot getParkingLot(Car car) {
+        ArrayList<ParkingLot> sortedList = new ArrayList<>(parkingLotList);
+        ParkingLot parkingLot = null;
         if (car.getDriverType().equals(DriverType.NORMAL)) {
-            ParkingLot parkingLot = this.getParkingLot();
-            parkingLot.parkVehicle(car, attendant);
+            sortedList.sort(Comparator.comparing(ParkingLot::getVehicleCount));
+            return sortedList.get(0);
         }
+        if (car.getDriverType().equals(DriverType.HANDICAP)) {
+            if (car.getSize().equals(VehicleSize.LARGE)) {
+                sortedList.sort(Comparator.comparing(ParkingLot::getVehicleCount));
+                return sortedList.get(0);
+            }
+            return sortedList.stream().filter(lot -> lot.getVehicleCount() < capacity).findFirst().get();
+        }
+        return parkingLot;
     }
 
     public void unParkVehicle(Car car) {
@@ -50,12 +56,6 @@ public class ParkingLotSystem {
                 {
                     throw new ParkingLotException(" No vehicle Present", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
                 });
-    }
-
-    private ParkingLot getParkingLot() {
-        ArrayList<ParkingLot> sortedList = new ArrayList<>(parkingLotList);
-        sortedList.sort(Comparator.comparing(ParkingLot::getVehicleCount));
-        return sortedList.get(0);
     }
 
     private ParkingLot getVehicleLocation(Car car) {
