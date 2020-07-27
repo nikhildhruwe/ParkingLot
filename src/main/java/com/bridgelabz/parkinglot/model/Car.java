@@ -14,10 +14,11 @@ public class Car {
     public Car() {
     }
 
-    public Car(DriverType driverType){
+    public Car(VehicleSize size,DriverType driverType){
         this.driverType = driverType;
-
+        this.size = size;
     }
+
     public Car(VehicleSize size, DriverType driverType, String color) {
         this.color = color;
         this.size = size;

@@ -155,10 +155,10 @@ public class ParkingLotTest {
     public void givenVehiclesToPark_WhenThereIsMultipleLots_ShouldBeEvenlyDistributedInParkingLots() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         parkingLot.addObserver(parkingLotOwner);
-        Car firstCar = new Car(DriverType.NORMAL);
-        Car secondCar = new Car(DriverType.NORMAL);
-        Car thirdCar = new Car(DriverType.NORMAL);
-        Car fourthCar = new Car(DriverType.NORMAL);
+        Car firstCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car secondCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car thirdCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car fourthCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
         parkingLotSystem.parkVehicle(firstCar, "abc");
         parkingLotSystem.parkVehicle(secondCar, "abc");
         parkingLotSystem.parkVehicle(thirdCar, "abc");
@@ -174,10 +174,10 @@ public class ParkingLotTest {
     public void givenVehiclesToPark_IfVehicleAlreadyPresentInAnyParkingLot_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         parkingLot.addObserver(parkingLotOwner);
-        Car firstCar = new Car(DriverType.NORMAL);
-        Car secondCar = new Car(DriverType.NORMAL);
-        Car thirdCar = new Car(DriverType.NORMAL);
-        Car fourthCar = new Car(DriverType.NORMAL);
+        Car firstCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car secondCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car thirdCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car fourthCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
         try {
             parkingLotSystem.parkVehicle(firstCar, "abc");
             parkingLotSystem.parkVehicle(secondCar, "abc");
@@ -192,9 +192,9 @@ public class ParkingLotTest {
     public void givenVehiclesToPark_IfNoSpaceInAnyParkingLot_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(2, 1);
         parkingLot.addObserver(parkingLotOwner);
-        Car firstCar = new Car(DriverType.NORMAL);
-        Car secondCar = new Car(DriverType.NORMAL);
-        Car thirdCar = new Car(DriverType.NORMAL);
+        Car firstCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car secondCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car thirdCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
         try {
             parkingLotSystem.parkVehicle(firstCar, "abc");
             parkingLotSystem.parkVehicle(secondCar, "abc");
@@ -210,10 +210,10 @@ public class ParkingLotTest {
     public void givenDriverType_IfHandicap_ShouldALotNearestParkingSlot() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         parkingLot.addObserver(parkingLotOwner);
-        Car firstCar = new Car(DriverType.NORMAL);
-        Car secondCar = new Car(DriverType.NORMAL);
-        Car thirdCar = new Car(DriverType.HANDICAP);
-        Car fourthCar = new Car(DriverType.HANDICAP);
+        Car firstCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car secondCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+        Car thirdCar = new Car(VehicleSize.SMALL,DriverType.HANDICAP);
+        Car fourthCar = new Car(VehicleSize.SMALL,DriverType.HANDICAP);
         parkingLotSystem.parkVehicle(firstCar, "abc");
         parkingLotSystem.parkVehicle(secondCar, "abc");
         parkingLotSystem.parkVehicle(thirdCar, "abc");
@@ -229,9 +229,9 @@ public class ParkingLotTest {
         try {
             ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
             parkingLot.addObserver(parkingLotOwner);
-            Car firstCar = new Car(DriverType.NORMAL);
-            Car secondCar = new Car(DriverType.NORMAL);
-            Car thirdCar = new Car(DriverType.HANDICAP);
+            Car firstCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+            Car secondCar = new Car(VehicleSize.SMALL,DriverType.NORMAL);
+            Car thirdCar = new Car(VehicleSize.SMALL,DriverType.HANDICAP);
             parkingLotSystem.parkVehicle(firstCar, "abc");
             parkingLotSystem.parkVehicle(secondCar, "abc");
             parkingLotSystem.unParkVehicle(thirdCar);
