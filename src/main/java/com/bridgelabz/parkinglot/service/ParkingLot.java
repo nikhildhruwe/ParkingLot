@@ -105,6 +105,7 @@ public class ParkingLot {
     }
 
     public int getParkingDuration(Car car) {
-        return LocalDateTime.now().getMinute() - this.getParkTime(car).getMinute();
+        Duration duration = Duration.between(LocalDateTime.now(), this.getParkTime(car));
+        return (int) duration.toMinutes();
     }
 }
