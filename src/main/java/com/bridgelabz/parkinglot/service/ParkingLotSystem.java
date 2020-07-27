@@ -78,12 +78,12 @@ public class ParkingLotSystem {
 
     public List<String> getVehicleByColor(String vehicleColor) {
         List<String> vehicleLocationList = new ArrayList<>();
-        for (int slots = 0; slots < capacity; slots++)
-            for (int lots = 0; lots < numberOfLots; lots++) {
-                Car car = parkingLotList.get(lots).parkingSlotList.get(slots).getCar();
-                if (car != null && car.getColor().equals(vehicleColor))
-                    vehicleLocationList.add(this.getVehicleLotNumber(car) + "-" + this.getVehicleSlotNumber(car));
-            }
+        parkingLotList.stream().map(lot -> lot.parkingSlotList.stream().
+                filter(slotNumber -> slotNumber.getCar() != null && slotNumber.getCar().getColor().equals(vehicleColor)).
+                collect(Collectors.toList())).
+                forEachOrdered(lot -> lot.stream().map(slotDetails -> this.getVehicleLotNumber(slotDetails.getCar())
+                        + "-" + this.getVehicleSlotNumber(slotDetails.getCar())).forEach(vehicleLocationList::add));
+
         if (vehicleLocationList.size() == 0)
             throw new ParkingLotException("Given Color Not Present", ParkingLotException.ExceptionType.INVALID_COLOR);
         return vehicleLocationList;

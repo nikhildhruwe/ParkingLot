@@ -274,7 +274,7 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthCar, "abc");
 
         List<String> locationList = parkingLotSystem.getVehicleByColor("white");
-        List<String> expectedList = Arrays.asList("2-1", "1-2");
+        List<String> expectedList = Arrays.asList("1-2", "2-1");
         Assert.assertEquals(expectedList, locationList);
     }
 
@@ -283,13 +283,9 @@ public class ParkingLotTest {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, "blue");
         Car secondCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, "white");
-        Car thirdCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, "orange");
-        Car fourthCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, "white");
         try {
             parkingLotSystem.parkVehicle(firstCar, "abc");
             parkingLotSystem.parkVehicle(secondCar, "abc");
-            parkingLotSystem.parkVehicle(thirdCar, "abc");
-            parkingLotSystem.parkVehicle(fourthCar, "abc");
 
             parkingLotSystem.getVehicleByColor("red");
         } catch (ParkingLotException e) {
