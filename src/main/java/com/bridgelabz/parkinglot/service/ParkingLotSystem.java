@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class ParkingLotSystem {
-    public final int numberOfLots;
-    public final int capacity;
+    private final int numberOfLots;
+    private final int capacity;
     private final ArrayList<ParkingLot> parkingLotList;
 
     public ParkingLotSystem(int numberOfLots, int capacity) {
@@ -136,16 +136,15 @@ public class ParkingLotSystem {
     }
 
     public List<String> getVehicleDetailsOfHandicapCarFromGivenLot(int lotNumber) {
-        List<String> vehicleDetails = new ArrayList<>();
+        List<String> vehicleDetails;
         if (lotNumber > numberOfLots)
             throw new ParkingLotException("Lot Number Does Not Exist", ParkingLotException.ExceptionType.INVALID_LOT);
-        for (int slot = 0; slot < capacity; slot++) {
-            Car car = parkingLotList.get(lotNumber - 1).parkingSlotList.get(slot).getCar();
-            if (car != null && car.getSize().equals(VehicleSize.SMALL) && car.getDriverType().equals(DriverType.HANDICAP))
-                vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
+        vehicleDetails = IntStream.range(0, capacity).mapToObj(slot -> parkingLotList.get(lotNumber - 1).
+                parkingSlotList.get(slot).getCar()).filter(car -> car != null && car.getSize().equals(VehicleSize.SMALL) &&
+                car.getDriverType().equals(DriverType.HANDICAP))
+                .map(car -> "Lot: " + this.getVehicleLotNumber(car)
                         + ",Slot: " + this.getVehicleSlotNumber(car)
-                        + ",Number Plate: " + car.getNumberPlate());
-        }
+                        + ",Number Plate: " + car.getNumberPlate()).collect(Collectors.toList());
         if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
@@ -156,10 +155,10 @@ public class ParkingLotSystem {
         if (lotNumber > numberOfLots)
             throw new ParkingLotException("Lot Number Does Not Exist", ParkingLotException.ExceptionType.INVALID_LOT);
         vehicleDetails = IntStream.range(0, capacity).
-                        mapToObj(slot -> parkingLotList.get(lotNumber - 1).parkingSlotList.get(slot).getCar()).
-                        filter(Objects::nonNull).
-                        map(car -> "Lot: " + this.getVehicleLotNumber(car) + ",Slot: " + this.getVehicleSlotNumber(car)
-                          + ",Number Plate: " + car.getNumberPlate()).collect(Collectors.toList());
+                mapToObj(slot -> parkingLotList.get(lotNumber - 1).parkingSlotList.get(slot).getCar()).
+                filter(Objects::nonNull).
+                map(car -> "Lot: " + this.getVehicleLotNumber(car) + ",Slot: " + this.getVehicleSlotNumber(car)
+                        + ",Number Plate: " + car.getNumberPlate()).collect(Collectors.toList());
         if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
