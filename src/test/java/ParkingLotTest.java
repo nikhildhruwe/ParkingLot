@@ -346,8 +346,8 @@ public class ParkingLotTest {
         parkingLotSystem.parkVehicle(fourthCar, "firstAttendant");
 
         List<String> vehicleParkingDetails = parkingLotSystem.getVehicleDetailsByCompany(VehicleCompany.BMW);
-        List<String> expectedDetails = Arrays.asList("Lot: 2,Slot: 1,Number Plate: b234",
-                "Lot: 1,Slot: 2,Number Plate: d567");
+        List<String> expectedDetails = Arrays.asList("Lot: 1,Slot: 2,Number Plate: d567",
+                "Lot: 2,Slot: 1,Number Plate: b234");
         Assert.assertEquals(expectedDetails, vehicleParkingDetails);
     }
 
@@ -355,9 +355,8 @@ public class ParkingLotTest {
     public void givenVehicleBMW_IfNotPresent_ShouldThrowException() {
         ParkingLotSystem parkingLotSystem = new ParkingLotSystem(3, 3);
         Car firstCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.MAHINDRA, "blue", "a123");
-        Car secondCar = new Car(VehicleSize.SMALL, DriverType.NORMAL, VehicleCompany.MARUTI, "blue", "c456");
         try {
-            parkingLotSystem.parkVehicle(secondCar, "thirdAttendant");
+            parkingLotSystem.parkVehicle(firstCar, "thirdAttendant");
 
             parkingLotSystem.getVehicleDetailsByCompany(VehicleCompany.BMW);
         } catch (ParkingLotException e) {

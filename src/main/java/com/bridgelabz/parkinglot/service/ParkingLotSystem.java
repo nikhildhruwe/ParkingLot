@@ -84,52 +84,47 @@ public class ParkingLotSystem {
                 forEachOrdered(lot -> lot.stream().map(slotDetails -> this.getVehicleLotNumber(slotDetails.getCar())
                         + "-" + this.getVehicleSlotNumber(slotDetails.getCar())).forEach(vehicleLocationList::add));
 
-        if (vehicleLocationList.size() == 0)
+        if (vehicleLocationList.isEmpty())
             throw new ParkingLotException("Given Color Not Present", ParkingLotException.ExceptionType.INVALID_COLOR);
         return vehicleLocationList;
     }
 
     public List<String> getVehicleDetailsByCompanyAndColor(VehicleCompany company, String color) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int slots = 0; slots < capacity; slots++)
-            for (int lots = 0; lots < numberOfLots; lots++) {
-                Car car = parkingLotList.get(lots).parkingSlotList.get(slots).getCar();
-                if (car != null && car.getCompany().equals(company) && car.getColor().equals(color))
-                    vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
-                            + ",Slot: " + this.getVehicleSlotNumber(car)
-                            + ",Attendant: " + parkingLotList.get(lots).parkingSlotList.get(slots).getAttendant()
-                            + ",Number Plate: " + car.getNumberPlate());
-            }
-        if (vehicleDetails.size() == 0)
+        parkingLotList.stream().map(lot -> lot.parkingSlotList.stream().
+                filter(slotNumber -> slotNumber.getCar() != null && slotNumber.getCar().getCompany().equals(company)
+                        && slotNumber.getCar().getColor().equals(color)).
+                collect(Collectors.toList())).
+                forEachOrdered(lot -> lot.stream().map(slotDetails -> "Lot: " + this.getVehicleLotNumber(slotDetails.getCar())
+                        + ",Slot: " + this.getVehicleSlotNumber(slotDetails.getCar())
+                        + ",Attendant: " + slotDetails.getAttendant()
+                        + ",Number Plate: " + slotDetails.getCar().getNumberPlate()).forEach(vehicleDetails::add));
+        if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
 
     public List<String> getVehicleDetailsByCompany(VehicleCompany company) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int slots = 0; slots < capacity; slots++)
-            for (int lots = 0; lots < numberOfLots; lots++) {
-                Car car = parkingLotList.get(lots).parkingSlotList.get(slots).getCar();
-                if (car != null && car.getCompany().equals(company))
-                    vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
-                            + ",Slot: " + this.getVehicleSlotNumber(car)
-                            + ",Number Plate: " + car.getNumberPlate());
-            }
-        if (vehicleDetails.size() == 0)
+        parkingLotList.stream().map(lot -> lot.parkingSlotList.stream().
+                filter(slotNumber -> slotNumber.getCar() != null && slotNumber.getCar().getCompany().equals(company)).
+                collect(Collectors.toList())).
+                forEachOrdered(slot -> slot.stream().map(slotDetails -> "Lot: " + this.getVehicleLotNumber(slotDetails.getCar())
+                        + ",Slot: " + this.getVehicleSlotNumber(slotDetails.getCar())
+                        + ",Number Plate: " + slotDetails.getCar().getNumberPlate()).forEach(vehicleDetails::add));
+        if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Such Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;
     }
 
     public List<String> getVehicleDetailsWithInProvidedTime(int minutes) {
         List<String> vehicleDetails = new ArrayList<>();
-        for (int slots = 0; slots < capacity; slots++)
-            for (int lots = 0; lots < numberOfLots; lots++) {
-                Car car = parkingLotList.get(lots).parkingSlotList.get(slots).getCar();
-                if (car != null && parkingLotList.get(lots).getParkingDuration(car) <= minutes)
-                    vehicleDetails.add("Lot: " + this.getVehicleLotNumber(car)
-                            + ",Slot: " + this.getVehicleSlotNumber(car)
-                            + ",Number Plate: " + car.getNumberPlate());
-            }
+        parkingLotList.stream().map(lot -> lot.parkingSlotList.stream().
+                filter(slotNumber -> slotNumber.getCar() != null && lot.getParkingDuration(slotNumber.getCar()) <= minutes).
+                collect(Collectors.toList())).
+                forEachOrdered(lot -> lot.stream().map(slotDetails -> "Lot: " + this.getVehicleLotNumber(slotDetails.getCar())
+                        + ",Slot: " + this.getVehicleSlotNumber(slotDetails.getCar())
+                        + ",Number Plate: " + slotDetails.getCar().getNumberPlate()).forEach(vehicleDetails::add));
         if (vehicleDetails.isEmpty())
             throw new ParkingLotException("No Vehicle Found", ParkingLotException.ExceptionType.VEHICLE_NOT_FOUND);
         return vehicleDetails;

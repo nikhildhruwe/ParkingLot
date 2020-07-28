@@ -1,6 +1,4 @@
-package com.bridgelabz.parkinglot.utility;
-
-import com.bridgelabz.parkinglot.model.Car;
+package com.bridgelabz.parkinglot.model;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;

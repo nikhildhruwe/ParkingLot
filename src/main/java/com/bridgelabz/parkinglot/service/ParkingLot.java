@@ -1,13 +1,12 @@
 package com.bridgelabz.parkinglot.service;
 
 import com.bridgelabz.parkinglot.exception.ParkingLotException;
-import com.bridgelabz.parkinglot.utility.ParkingSlotDetails;
+import com.bridgelabz.parkinglot.model.ParkingSlotDetails;
 import com.bridgelabz.parkinglot.model.Car;
 import com.bridgelabz.parkinglot.observer.ParkingLotObserver;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
